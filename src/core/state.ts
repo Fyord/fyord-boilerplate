@@ -1,12 +1,5 @@
-export enum StatePaths {
-  Root = '',
-  UserAge = 'userAge'
-}
+export enum StatePaths {}
 
-export type State = {
-  userAge: number
-};
+export type State = {};
 
-export const InitialState = {
-  userAge: 30
-} as State;
+export const InitialState = {} as State;

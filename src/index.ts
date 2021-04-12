@@ -1,18 +1,9 @@
 import { App, Environments } from 'fyord';
-import { defaultLayout, InitialState, State } from './core/module';
-import { DevelopmentEnvironmentVariables, ProductionEnvironmentVariables } from './environments';
+import { defaultLayout } from './core/module';
 
-import './styles/styles.scss';
 import './pages/module';
 
 (async () => {
-  const app = App.Instance(
-    process.env.NODE_ENV || Environments.Production,
-    ProductionEnvironmentVariables,
-    DevelopmentEnvironmentVariables);
-
-  app.InitializeStore<State>(InitialState);
+  const app = App.Instance(process.env.NODE_ENV || Environments.Production);
   await app.Start(defaultLayout);
-
-  window['app'] = app;
 })();
