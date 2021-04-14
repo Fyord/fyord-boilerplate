@@ -48,5 +48,8 @@
     "html-webpack-plugin": "^4.5.2",
     "fyord": "0.0.14",
     "fyord-cli": "0.0.17"
+  },
+  "dependencies": {
+    "file-loader": "^6.2.0"
   }
 }

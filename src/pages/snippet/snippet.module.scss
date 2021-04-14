@@ -1,0 +1,36 @@
+.editor {
+    position: relative;
+    color: #4F6D7A;
+    background-color: #E5E5E5;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.5);
+    border-radius: 20px;
+    padding: 48px 36px 36px 36px;
+    min-height: 300px;
+}
+
+.editor__buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 64px;
+    position: absolute;
+    top: 19px;
+    left: 17px;
+}
+
+.editor__button {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+}
+
+.editor__button--close {
+    background-color: #D05B5B;
+}
+
+.editor__button--minimize {
+    background-color: #BFC149;
+}
+
+.editor__button--expand {
+    background-color: #5DA842;
+}

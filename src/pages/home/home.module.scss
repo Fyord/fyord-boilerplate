@@ -1,3 +1,110 @@
-.red {
-    background-color: red;
+.home {
+    color: white;
+}
+
+.home__header {
+    height: 100vh;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.home__header-slogan {
+    font-weight: bold;
+    font-size: 40px;
+    margin: 40px 0 16px 0;
+}
+
+.home__header-subtitle {
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    color: rgba(219, 233, 238, 0.8);
+}
+
+.home__header-logo {
+    width: 256px;
+    margin: 0 auto;
+}
+
+.home__header-nav {
+    display: flex;
+    padding: 0;
+    justify-content: center;
+    margin: 42px 0;
+}
+
+.home__header-nav li {
+    display: inline-block;
+    list-style: none;
+    padding: 0 12px;
+    font-size: 18px;
+    line-height: 22px;
+}
+
+.home__header-nav a,
+footer ul a {
+    color: #4F6D7A;
+    text-decoration: none;
+}
+
+.home__header-nav a:hover {
+    color: white;
+}
+
+.home__section {
+    display: flex;
+    flex-direction: column;
+    margin: 0 24px 80px;
+}
+
+.home__section header {
+    margin-bottom: 16px;
+}
+
+.home__section h2 {
+    font-size: 2rem;
+}
+
+.home__section p {
+    color: #abb7bb;
+}
+
+.home__section-more {
+    text-align: center;
+    margin: 100px 0 80px 0;
+    color: #abb7bb;
+    padding: 0 24px;
+}
+
+.home__section-more h2 {
+    font-size: 2.5rem;
+}
+
+.home__section-more h2,
+.home__section-more h3 {
+    color: white;
+}
+
+.home__footer {
+    display: flex;
+    justify-content: space-evenly;
+    background-color: black;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    padding: 24px;
+}
+
+.home__footer ul {
+    padding: 0;
+}
+
+.home__footer ul li {
+    list-style: none;
+}
+
+.home__footer a:hover {
+    color: white;
 }
