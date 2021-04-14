@@ -1,6 +1,6 @@
 import { ParseJsx, Page, Route } from 'fyord';
 import { Snippets } from '../../snippets';
-import { SnippetComponent } from '../snippet/snippet';
+import { SnippetComponent } from '../../components/module';
 import styles from "./home.module.scss";
 
 const enum StyleName {
