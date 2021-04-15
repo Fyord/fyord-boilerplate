@@ -1,21 +1,8 @@
 import { ParseJsx, Page, Route } from 'fyord';
 import { Snippets } from '../../snippets';
 import { SnippetComponent } from '../../components/module';
+import { StyleName } from './styleName';
 import styles from "./home.module.scss";
-
-const enum StyleName {
-  Home = 'home',
-  Header = 'home__header',
-  HeaderLogo = 'home__header-logo',
-  HeaderSlogan = 'home__header-slogan',
-  HeaderSubtitle = 'home__header-subtitle',
-  HeaderNav = 'home__header-nav',
-  Section = 'home__section',
-  SectionWrapper = 'section-wrapper',
-  SectionMore = 'home__more',
-  SectionMoreItemWrapper = 'home__more-item-wrapper',
-  Footer = 'home__footer',
-}
 
 export class HomePage extends Page {
   Title = 'Fyord - A minimalist UI Framework designed to embrace core competencies';
