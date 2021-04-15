@@ -1,6 +1,7 @@
 node_modules
 dist
 coverage
+public
 TESTS*.xml
 *debug.log
 .DS_Store
