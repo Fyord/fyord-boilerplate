@@ -11,7 +11,9 @@ const enum StyleName {
   HeaderSubtitle = 'home__header-subtitle',
   HeaderNav = 'home__header-nav',
   Section = 'home__section',
-  SectionMore = 'home__section-more',
+  SectionWrapper = 'section-wrapper',
+  SectionMore = 'home__more',
+  SectionMoreItemWrapper = 'home__more-item-wrapper',
   Footer = 'home__footer',
 }
 
@@ -35,62 +37,60 @@ export class HomePage extends Page {
         </ul>
       </header>
 
-      <section class={styles[StyleName.Section]}>
-        <header>
-          <h2>Components</h2>
-          <p>Fyord allows you to build your UI using components that contain their own state, styles, and behaviors. Simply extend from the base Component class and import where you need them.</p>
-        </header>
-        {await new SnippetComponent(Snippets.Component).Render()}
-      </section>
 
-      <section class={styles[StyleName.Section]}>
-        <header>
-          <h2>Routing</h2>
-          <p>Routing in Fyord is seamless. Simply use normal anchor tags! Local urls (which are not target=_blank) will be routed on the client. See the documentation to see examples of routing parameters.</p>
-        </header>
-        {await new SnippetComponent(Snippets.Routing).Render()}
-      </section>
-
-      <section class={styles[StyleName.Section]}>
-        <header>
-          <h2>Styling</h2>
-          <p>Styling components in Fyord is straightforward, whether you want global or component level styles.</p>
-          <p>Simply create a file with the .module.css and import to use! Prefer Sass instead? No problem, just change the extension to .scss.</p>
-        </header>
-        {await new SnippetComponent(Snippets.Styling).Render()}
-      </section>
-
-      <section class={styles[StyleName.Section]}>
-        <header>
-          <h2>State</h2>
-          <p>Maintaining app and component state couldn’t be easier. Using decorators, you can quickly create state at the global app store or the local component level that will automatically update your component UI upon state change.</p>
-        </header>
-        {await new SnippetComponent(Snippets.State).Render()}
-      </section>
-
-      <section class={styles[StyleName.Section]}>
-        <header>
-          <h2>Security</h2>
-          <p>Fyord contains several passive security features that protect your site without any effort on your behalf. This includes handling common image onerror attacks, input sanitization, and more.</p>
-        </header>
-        {/* TODO: Add examples from boilerplate */}
-      </section>
-
-      <section class={styles[StyleName.SectionMore]}>
-        <h2>And more...</h2>
-        <div>
-          <h3>JSX Templates</h3>
-          <p>Create component templates Intuitively using familiar JSX syntax! Use the syntax and attributes you already know (class, events, etc.)</p>
-        </div>
-        <div>
-        <h3>Testability</h3>
-          <p>Fyord is designed with testability in mind! Testing Fyord components is like testing any other class. There are no life cycles or DI containers to pay tribute to here!</p>
-        </div>
-        <div>
-          <h3>Pre-rendering</h3>
-          <p>Fyord pages support three pre-render modes (static, dynamic, and hybrid), making optimizing for SEO or deploying a fully static site easy.</p>
-        </div>
-      </section>
+      <div class={styles[StyleName.SectionWrapper]}>
+        <section class={styles[StyleName.Section]}>
+          <header>
+            <h2>Components</h2>
+            <p>Fyord allows you to build your UI using components that contain their own state, styles, and behaviors. Simply extend from the base Component class and import where you need them.</p>
+          </header>
+          {await new SnippetComponent(Snippets.Component).Render()}
+        </section>
+        <section class={styles[StyleName.Section]}>
+          <header>
+            <h2>Routing</h2>
+            <p>Routing in Fyord is seamless. Simply use normal anchor tags! Local urls (which are not target=_blank) will be routed on the client. See the documentation to see examples of routing parameters.</p>
+          </header>
+          {await new SnippetComponent(Snippets.Routing).Render()}
+        </section>
+        <section class={styles[StyleName.Section]}>
+          <header>
+            <h2>Styling</h2>
+            <p>Styling components in Fyord is straightforward, whether you want global or component level styles.</p>
+            <p>Simply create a file with the .module.css and import to use! Prefer Sass instead? No problem, just change the extension to .scss.</p>
+          </header>
+          {await new SnippetComponent(Snippets.Styling).Render()}
+        </section>
+        <section class={styles[StyleName.Section]}>
+          <header>
+            <h2>State</h2>
+            <p>Maintaining app and component state couldn’t be easier. Using decorators, you can quickly create state at the global app store or the local component level that will automatically update your component UI upon state change.</p>
+          </header>
+          {await new SnippetComponent(Snippets.State).Render()}
+        </section>
+        <section class={styles[StyleName.SectionMore]}>
+          <header>
+            <h2>And more...</h2>
+          </header>
+          <div class={styles[StyleName.SectionMoreItemWrapper]}>
+            <div>
+              <svg aria-hidden="true" width="24" focusable="false" data-prefix="fal" data-icon="code" class="svg-inline--fa fa-code fa-w-18" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M228.5 511.8l-25-7.1c-3.2-.9-5-4.2-4.1-7.4L340.1 4.4c.9-3.2 4.2-5 7.4-4.1l25 7.1c3.2.9 5 4.2 4.1 7.4L235.9 507.6c-.9 3.2-4.3 5.1-7.4 4.2zm-75.6-125.3l18.5-20.9c1.9-2.1 1.6-5.3-.5-7.1L49.9 256l121-102.5c2.1-1.8 2.4-5 .5-7.1l-18.5-20.9c-1.8-2.1-5-2.3-7.1-.4L1.7 252.3c-2.3 2-2.3 5.5 0 7.5L145.8 387c2.1 1.8 5.3 1.6 7.1-.5zm277.3.4l144.1-127.2c2.3-2 2.3-5.5 0-7.5L430.2 125.1c-2.1-1.8-5.2-1.6-7.1.4l-18.5 20.9c-1.9 2.1-1.6 5.3.5 7.1l121 102.5-121 102.5c-2.1 1.8-2.4 5-.5 7.1l18.5 20.9c1.8 2.1 5 2.3 7.1.4z"></path></svg>
+              <h3>JSX Templates</h3>
+              <p>Create component templates Intuitively using familiar JSX syntax! Use the syntax and attributes you already know (class, events, etc.)</p>
+            </div>
+            <div>
+            <svg aria-hidden="true" width="24" focusable="false" data-prefix="fal" data-icon="vial" class="svg-inline--fa fa-vial fa-w-15" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 512"><path fill="currentColor" d="M477.7 188L308 18.3c-3.1-3.1-8.2-3.1-11.3 0l-11.3 11.3c-3.1 3.1-3.1 8.2 0 11.3l17 17L28.1 332.1c-37.5 37.5-37.6 98.2 0 135.7 37.5 37.5 98.2 37.6 135.7 0L438 193.6l17 17c3.1 3.1 8.2 3.1 11.3 0l11.3-11.3c3.2-3.1 3.2-8.1.1-11.3zM141.3 445.2c-24.2 24.2-66.3 24.2-90.5 0-25-25-25-65.5 0-90.5l66.7-66.7h181L141.3 445.2zM330.5 256h-181L324.9 80.6l90.5 90.5-84.9 84.9z"></path></svg>
+            <h3>Testability</h3>
+              <p>Fyord is designed with testability in mind! Testing Fyord components is like testing any other class. There are no life cycles or DI containers to pay tribute to here!</p>
+            </div>
+            <div>
+              <svg aria-hidden="true" width="24" focusable="false" data-prefix="fal" data-icon="file-code" class="svg-inline--fa fa-file-code fa-w-12" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M369.941 97.941l-83.882-83.882A48 48 0 0 0 252.118 0H48C21.49 0 0 21.49 0 48v416c0 26.51 21.49 48 48 48h288c26.51 0 48-21.49 48-48V131.882a48 48 0 0 0-14.059-33.941zm-22.627 22.628a15.89 15.89 0 0 1 4.195 7.431H256V32.491a15.88 15.88 0 0 1 7.431 4.195l83.883 83.883zM336 480H48c-8.837 0-16-7.163-16-16V48c0-8.837 7.163-16 16-16h176v104c0 13.255 10.745 24 24 24h104v304c0 8.837-7.163 16-16 16zm-161.471-67.404l-25.928-7.527a5.1 5.1 0 0 1-3.476-6.32l58.027-199.869a5.1 5.1 0 0 1 6.32-3.476l25.927 7.527a5.1 5.1 0 0 1 3.476 6.32L180.849 409.12a5.1 5.1 0 0 1-6.32 3.476zm-48.446-47.674l18.492-19.724a5.101 5.101 0 0 0-.351-7.317L105.725 304l38.498-33.881a5.1 5.1 0 0 0 .351-7.317l-18.492-19.724a5.1 5.1 0 0 0-7.209-.233L57.61 300.279a5.1 5.1 0 0 0 0 7.441l61.263 57.434a5.1 5.1 0 0 0 7.21-.232zm139.043.232l61.262-57.434a5.1 5.1 0 0 0 0-7.441l-61.262-57.434a5.1 5.1 0 0 0-7.209.233l-18.492 19.724a5.101 5.101 0 0 0 .351 7.317L278.275 304l-38.499 33.881a5.1 5.1 0 0 0-.351 7.317l18.492 19.724a5.1 5.1 0 0 0 7.209.232z"></path></svg>
+              <h3>Pre-rendering</h3>
+              <p>Fyord pages support three pre-render modes (static, dynamic, and hybrid), making optimizing for SEO or deploying a fully static site easy.</p>
+            </div>
+          </div>
+        </section>
+      </div>
 
       <footer class={styles[StyleName.Footer]}>
         <div>
