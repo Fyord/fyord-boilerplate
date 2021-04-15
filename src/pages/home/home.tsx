@@ -37,7 +37,6 @@ export class HomePage extends Page {
         </ul>
       </header>
 
-
       <div class={styles[StyleName.SectionWrapper]}>
         <section class={styles[StyleName.Section]}>
           <header>
@@ -46,6 +45,7 @@ export class HomePage extends Page {
           </header>
           {await new SnippetComponent(Snippets.Component).Render()}
         </section>
+
         <section class={styles[StyleName.Section]}>
           <header>
             <h2>Routing</h2>
@@ -53,6 +53,7 @@ export class HomePage extends Page {
           </header>
           {await new SnippetComponent(Snippets.Routing).Render()}
         </section>
+
         <section class={styles[StyleName.Section]}>
           <header>
             <h2>Styling</h2>
@@ -61,6 +62,7 @@ export class HomePage extends Page {
           </header>
           {await new SnippetComponent(Snippets.Styling).Render()}
         </section>
+
         <section class={styles[StyleName.Section]}>
           <header>
             <h2>State</h2>
@@ -68,6 +70,7 @@ export class HomePage extends Page {
           </header>
           {await new SnippetComponent(Snippets.State).Render()}
         </section>
+
         <section class={styles[StyleName.SectionMore]}>
           <header>
             <h2>And more...</h2>
