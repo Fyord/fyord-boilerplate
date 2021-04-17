@@ -11,7 +11,7 @@
     "start": "webpack serve --config webpack.dev.js",
     "start-prod": "webpack serve --config webpack.prod.js",
     "test": "jest --watch",
-    "test-once": "jest --collectCoverage --coverageReporters lcov clover",
+    "test-once": "jest --passWithNoTests --collectCoverage --coverageReporters lcov clover",
     "lint": "eslint src/**/*.ts",
     "pre-render": "fyord prerender && cp -R public/pre-render/* public/ && rm -rf public/pre-render"
   },

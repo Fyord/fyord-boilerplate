@@ -1,5 +1,5 @@
-import { HomePage } from './home/home';
+import { WelcomePage } from './welcome/welcome';
 
 export const pages = [
-  new HomePage(),
+  new WelcomePage()
 ];

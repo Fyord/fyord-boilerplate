@@ -1,1 +1,1 @@
-export const defaultLayout = async () => /*html*/ `<main></main>`;
+export const defaultLayout = async () => /*html*/ '<main></main>';

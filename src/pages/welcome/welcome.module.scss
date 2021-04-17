@@ -1,0 +1,29 @@
+$fyord-color: #1F1750;
+
+.welcome {
+    text-align: center;
+    border-top: 8px solid $fyord-color;
+
+    header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 90vh;
+    }
+
+    h1 {
+        margin: 0;
+        color: $fyord-color;
+        font-size: 1.5rem;
+    }
+
+    p {
+        font-size: 1.125rem;
+        color: rgba($color: $fyord-color, $alpha: 0.5)
+    }
+
+    a {
+        color: $fyord-color;
+        font-weight: bold;
+    }
+}
