@@ -26,6 +26,9 @@
     "core-js": "^2.6.5",
     "css-loader": "^5.1.2",
     "eslint": "^6.8.0",
+    "fyord": "0.0.15",
+    "fyord-cli": "0.0.22",
+    "html-webpack-plugin": "^4.5.2",
     "identity-obj-proxy": "^3.0.0",
     "jasmine-core": "^2.5.2",
     "jest": "^26.6.3",
@@ -44,10 +47,7 @@
     "webpack-cli": "^4.3.1",
     "webpack-dev-server": "^3.11.2",
     "webpack-merge": "^4.2.2",
-    "xss": "^1.0.8",
-    "html-webpack-plugin": "^4.5.2",
-    "fyord": "0.0.14",
-    "fyord-cli": "0.0.17"
+    "xss": "^1.0.8"
   },
   "dependencies": {
     "file-loader": "^6.2.0"
