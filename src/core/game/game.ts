@@ -37,11 +37,6 @@ export class Game {
       this.CollisionEvent
     ];
 
-    this.GameLoop.Framerate.Subscribe(framerate => {
-      const framerateLabel = document.getElementById('framerate') as HTMLSpanElement;
-      framerateLabel.innerText = framerate?.toString() || '0';
-    });
-
     this.CollisionEvent.Subscribe(() => {
       this.utility.DetectCollisions(this.Characters);
     });

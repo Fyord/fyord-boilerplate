@@ -8,7 +8,7 @@ export class LevelOne extends Level {
   Title = 'Level One';
   Route = async (route: Route) => route.path === Routes.LevelOne;
   Template = async () =>
-    <div class={styles.firstLevel}>
+    <div class={styles.levelOne}>
       {await new DotCharacter().Render()}
     </div>;
 }
