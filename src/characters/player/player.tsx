@@ -1,24 +1,21 @@
 import { ParseJsx, Asap } from 'fyord';
-import { Character, Controller, StartingSizeAndPosition } from '../../core/module';
+import { Character, Controller } from '../../core/module';
 import { CharacterTypes, Controls } from '../../enums/module';
-import styles from './dotCharacter.module.scss';
+import styles from './player.module.scss';
 
-export class DotCharacter extends Character {
+export class Player extends Character {
   CharacterType = CharacterTypes.Player;
 
-  Template = async () => <div class={styles.dotCharacterComponent}></div>;
+  Template = async () => <div class={styles.player}></div>;
 
   constructor(
-    startingSizeAndPosition?: StartingSizeAndPosition,
     private controller = Controller.Instance
   ) {
-    super(startingSizeAndPosition);
-
-    this.InitAttributes(() => {
-      this.Size = { height: 40, width: 40 };
-    });
+    super();
 
     Asap(() => {
+      this.Size = { height: 40, width: 40 };
+
       this.game.PlayerControls.Subscribe(() => {
         const upValue = this.controller.GetControlValue(Controls.Up);
         const downValue = this.controller.GetControlValue(Controls.Down);

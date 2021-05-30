@@ -1,1 +1,1 @@
-export * from './dotCharacter/dotCharacter';
+export * from './player/player';

@@ -1,6 +1,6 @@
 import { Route, ParseJsx } from 'fyord';
 import { Level } from '../../core/level/level';
-import { DotCharacter } from '../../characters/module';
+import { Player } from '../../characters/module';
 import { Routes } from '../../enums/Routes';
 import styles from './levelOne.module.scss';
 
@@ -9,6 +9,6 @@ export class LevelOne extends Level {
   Route = async (route: Route) => route.path === Routes.LevelOne;
   Template = async () =>
     <div class={styles.levelOne}>
-      {await new DotCharacter().Render()}
+      {await new Player().Render()}
     </div>;
 }

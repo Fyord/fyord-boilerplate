@@ -1,18 +1,9 @@
-import { Component } from 'fyord';
+import { Asap, Component } from 'fyord';
 import { Observable } from 'tsbase/Patterns/Observable/Observable';
 import { CharacterTypes } from '../../enums/CharacterTypes';
 import { Game } from '../game/game';
-import { HitBox, Position, Size } from '../types';
+import { HitBox, Position, Size, StartingSizeAndPosition } from '../types';
 import { Utility } from '../utility/utility';
-
-export type StartingSizeAndPosition = {
-  height: number,
-  width: number,
-  xpos: number,
-  ypos: number,
-  centered: boolean,
-  angle: number
-};
 
 export abstract class Character extends Component {
   private angle: number = 0;
@@ -76,7 +67,7 @@ export abstract class Character extends Component {
   ) {
     super();
 
-    this.InitAttributes(() => {
+    Asap(() => {
       this.game.Characters.push(this);
       this.Element!.style.position = 'absolute';
       this.Size = { width: this.intOrDefault(startingSizeAndPosition?.width), height: this.intOrDefault(startingSizeAndPosition?.height) };
@@ -109,12 +100,6 @@ export abstract class Character extends Component {
       xBounds: { l: this.Position.x, r: this.Position.x + this.Size.width },
       yBounds: { b: this.Position.y, t: this.Position.y + this.Size.height }
     };
-  }
-
-  public InitAttributes = (func: () => void): void => {
-    setTimeout(() => {
-      func();
-    });
   }
 
   private intOrDefault = (value?: number) => {
