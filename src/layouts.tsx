@@ -1,3 +1,10 @@
-import { ParseJsx } from 'fyord';
+import { ParseJsx, Fragment } from 'fyord';
 
-export const defaultLayout = async () => <main></main>;
+export const defaultLayout = async () => <>
+  <div class="framerate" id="framerate"></div>
+  <div class="menu" id="menu">
+    <p>Game Paused</p>
+  </div>
+
+  <main></main>
+</>;

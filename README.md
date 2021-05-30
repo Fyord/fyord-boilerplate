@@ -1,5 +1,7 @@
-# fyord boilerplate
-Boilerplate project using the fyord framework
+# fyord game boilerplate
+Boilerplate project using the fyord framework to build a game
+
+***This branch is in a prototype state***
 
 ## Installation / Local Development
 - `npm i`
