@@ -1,35 +1,52 @@
-// import { Asap } from 'fyord';
-// import { Strings } from 'tsbase/Functions/Strings';
-// import { Level } from '../core/level/level';
-// import { Game } from '../core/module';
-// import { CharacterTypes, Images, Routes } from '../enums/module';
+import { Strings } from 'tsbase/Functions/Strings';
+import { Asteroid } from '../../characters/asteroids/asteroid/asteroid';
+import { Wormhole } from '../../characters/asteroids/wormhole/wormhole';
+import { Game, Level } from '../../core/module';
+import { Routes, Images } from '../../enums/module';
 
-// export abstract class AsteroidsLevel extends Level {
-//   private wormholeDestination = Routes.LevelOne;
-//   private collisionEventRef = Strings.Empty;
+export abstract class AsteroidsLevel extends Level {
+  private wormholeDestination = Routes.LevelOne;
+  private collisionEventRef = Strings.Empty;
 
-//   constructor(protected game = Game.Instance) {
-//     super();
+  constructor(playable = true, protected game = Game.Instance) {
+    super();
 
-//     this.App.Router.Route.Subscribe(async () => {
-//       if (!!this.Element) {
-//         this.collisionEventRef = this.game.CollisionEvent.Subscribe(() => {
-//           const remainingAsteroids = document.querySelectorAll(CharacterTypes.Asteroid) as NodeListOf<AsteroidCharacter>;
-//           if (remainingAsteroids.length === 0) {
-//             // reveal wormhole
-//           }
-//         });
-//       } else if (this.collisionEventRef) {
-//         this.game.CollisionEvent.Cancel(this.collisionEventRef);
-//       }
-//     });
-//   }
+    this.App.Router.Route.Subscribe(async () => {
+      this.collisionEventRef = Strings.Empty;
 
-//   protected set Background(v: Images) {
-//     document.body.style.backgroundImage = `url(${v})`;
-//   }
+      if (playable && this.Element && !this.collisionEventRef) {
+        this.spawnWormholeWhenAsteroidsCleared();
+      }
+    });
+  }
 
-//   protected set WormholeDestination(v: Routes) {
-//     this.wormholeDestination = v;
-//   }
-// }
+  Disconnected = () => {
+    this.game.CollisionEvent.Cancel(this.collisionEventRef);
+  }
+
+  protected set Background(v: Images) {
+    document.body.style.backgroundImage = `url(${v})`;
+  }
+
+  protected set WormholeDestination(v: Routes) {
+    this.wormholeDestination = v;
+  }
+
+  private spawnWormholeWhenAsteroidsCleared() {
+    Asteroid.Asteroids = Asteroid.Asteroids.filter(a => !!a.Element);
+    this.collisionEventRef = this.game.CollisionEvent.Subscribe(() => {
+      if (Asteroid.Asteroids.length === 0) {
+        this.game.CollisionEvent.Cancel(this.collisionEventRef);
+        this.spawnWormHole();
+      }
+    });
+  }
+
+  private spawnWormHole = (): void => {
+    const newWormHole = new Wormhole();
+    newWormHole.Route = this.wormholeDestination;
+    newWormHole.AddToLevel(() => {
+      newWormHole.Position = { x: this.game.MapBounds.maxX - 120, y: this.game.MapBounds.maxY - 120 };
+    });
+  }
+}

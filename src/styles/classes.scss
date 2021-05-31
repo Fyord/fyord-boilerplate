@@ -1,0 +1,13 @@
+.non-playable-level-container {
+  display: block;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+  padding: 100px 0;
+  position: relative;
+  z-index: 99;
+}

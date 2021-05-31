@@ -13,11 +13,18 @@ body {
   margin: 0;
   padding: 0;
   background-color: black;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
 }
 
 main {
-  background-color: white;
   overflow: hidden;
+}
+
+a {
+  color: lightgreen;
+  text-decoration: none;
 }
 
 .menu {
@@ -33,3 +40,4 @@ main {
   z-index: 100;
   color: white;
 }
+

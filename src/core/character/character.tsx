@@ -1,6 +1,7 @@
 import { Asap, Component } from 'fyord';
 import { Observable } from 'tsbase/Patterns/Observable/Observable';
 import { CharacterTypes } from '../../enums/CharacterTypes';
+import { MapStyles } from '../../enums/MapStyles';
 import { Game } from '../game/game';
 import { HitBox, Position, Size, StartingSizeAndPosition } from '../types';
 import { Utility } from '../utility/utility';
@@ -29,30 +30,45 @@ export abstract class Character extends Component {
   public get Position(): Position {
     return this.position;
   }
+  // eslint-disable-next-line complexity
   public set Position(v: Position) {
     const mapBounds = Game.Instance.MapBounds;
     const offset = this.Size.width > this.Size.height ? this.Size.width : this.Size.height;
     let newX = v.x;
     let newY = v.y;
 
-    if (v.x < mapBounds.minX) {
-      newX = mapBounds.minX;
-    } else if (v.x > mapBounds.maxX - offset) {
-      newX = mapBounds.maxX - offset;
+    if (this.game.MapStyle === MapStyles.Fixed) {
+      if (v.x < mapBounds.minX) {
+        newX = mapBounds.minX;
+      } else if (v.x > mapBounds.maxX - offset) {
+        newX = mapBounds.maxX - offset;
+      }
+    } else if (this.game.MapStyle === MapStyles.Wrapping) {
+      if (v.x < mapBounds.minX - offset) {
+        newX = mapBounds.maxX;
+      } else if (v.x > mapBounds.maxX) {
+        newX = mapBounds.minX - offset;
+      }
     }
 
     this.position.x = newX;
     this.Element!.style.left = `${newX}px`;
-    this.Element!.style.left = `${newX}px`;
 
-    if (v.y < mapBounds.minY) {
-      newY = mapBounds.minY;
-    } else if (v.y > mapBounds.maxY - offset) {
-      newY = mapBounds.maxY - offset;
+    if (this.game.MapStyle === MapStyles.Fixed) {
+      if (v.y < mapBounds.minY) {
+        newY = mapBounds.minY;
+      } else if (v.y > mapBounds.maxY - offset) {
+        newY = mapBounds.maxY - offset;
+      }
+    } else if (this.game.MapStyle === MapStyles.Wrapping) {
+      if (v.y < mapBounds.minY - offset) {
+        newY = mapBounds.maxY;
+      } else if (v.y > mapBounds.maxY) {
+        newY = mapBounds.minY - offset;
+      }
     }
 
     this.position.y = newY;
-    this.Element!.style.top = `${newY}px`;
     this.Element!.style.top = `${newY}px`;
   }
 
@@ -78,6 +94,23 @@ export abstract class Character extends Component {
         } :
         { x: this.intOrDefault(startingSizeAndPosition?.xpos), y: this.intOrDefault(startingSizeAndPosition?.ypos) };
       this.Angle = this.intOrDefault(startingSizeAndPosition?.angle);
+    });
+  }
+
+  public AddToLevel(mutation?: () => void): void {
+    (async () => {
+      if (!this.Element) {
+        const element = document.createElement('div');
+        element.innerHTML = await this.Render();
+        const characterElement = element.firstChild as HTMLDivElement;
+        characterElement.style.visibility = 'hidden';
+        this.App.Main.appendChild(characterElement);
+      }
+    })();
+
+    Asap(() => {
+      this.Element!.style.visibility = 'visible';
+      mutation?.();
     });
   }
 

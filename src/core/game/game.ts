@@ -4,8 +4,10 @@ import { Sounds } from '../../enums/Sounds';
 import { Utility } from '../utility/utility';
 import { App } from 'fyord';
 import { Character } from '../character/character';
+import { MapStyles } from '../../enums/MapStyles';
 
 export class Game {
+  public static TargetFramerate = 60;
   private static instance: Game | null = null;
   public static get Instance(): Game { return this.instance || (this.instance = new Game()); }
   public static Destroy(): void { this.instance = null; }
@@ -17,17 +19,17 @@ export class Game {
   public MapBounds = {
     minX: 0,
     minY: 0,
-    maxX: 800,
-    maxY: 600
+    maxX: innerWidth,
+    maxY: innerHeight
   };
   private characters = new Array<Character>();
   public get Characters(): Array<Character> {
-    this.characters = this.characters.filter(c => !!c.Element);
-    return this.characters;
+    return this.characters = this.characters.filter(c => !!c.Element);
   }
   private paused = false;
 
   private constructor(
+    public MapStyle = MapStyles.Wrapping,
     private utility = Utility.Instance,
     private app = App.Instance()
   ) {

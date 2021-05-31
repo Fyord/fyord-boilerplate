@@ -1,17 +1,24 @@
-import { ParseJsx } from 'fyord';
-import { Images, CharacterTypes } from '../../../enums/module';
+import { Asap, ParseJsx } from 'fyord';
+import { Images, CharacterTypes, Routes } from '../../../enums/module';
 import { Character } from '../../../core/module';
 import styles from './wormhole.module.scss';
 
-export class WormholeCharacter extends Character {
-  CharacterType = CharacterTypes.Wormhole;
-  HitBox = { radius: (() => this.Size.width / 2)(), offset: 0 };
+export class Wormhole extends Character {
+  public Route: Routes = Routes.LevelOne;
 
   Template = async () => <div class={`${CharacterTypes.Wormhole} ${styles.wormhole}`}>
     <img src={Images.Wormhole} alt="Wormhole" />
   </div>;
 
-  constructor(public Route: string) {
-    super();
+  constructor() {
+    super({
+      height: 80,
+      width: 80
+    });
+
+    Asap(() => {
+      this.CharacterType = CharacterTypes.Wormhole;
+      this.HitBox = { radius: (() => this.Size.width / 2)(), offset: 0 };
+    });
   }
 }

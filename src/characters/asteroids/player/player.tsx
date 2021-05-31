@@ -5,6 +5,7 @@ import { CollisionFunction, PlayerCollisionMap } from './collisionMap';
 import { playerSprite } from './sprite';
 import styles from './player.module.scss';
 import { Missile } from '../missile/missile';
+import { Strings } from 'tsbase/Functions/Strings';
 
 export const playerIds = {
   spriteContainer: 'spriteContainer'
@@ -23,6 +24,7 @@ export class Player extends Character {
   }
   private missileReady = true;
   private missileCoolDown = 200;
+  private playerControlsRef = Strings.Empty;
 
   constructor(private controller = Controller.Instance) {
     super();
@@ -32,7 +34,7 @@ export class Player extends Character {
       this.Size = defaultSize;
       this.Spawn();
 
-      this.game.PlayerControls.Subscribe(() => this.handleGamepadEvent());
+      this.playerControlsRef = this.game.PlayerControls.Subscribe(() => this.handleGamepadEvent());
 
       this.Collision.Subscribe((character: Character | undefined) => {
         if (character && PlayerCollisionMap.has(character.CharacterType)) {
@@ -42,43 +44,45 @@ export class Player extends Character {
     });
   }
 
+  Disconnected = () => {
+    this.game.PlayerControls.Cancel(this.playerControlsRef);
+  }
+
   public Spawn = (): void => {
     this.SpriteContainer.innerHTML = playerSprite;
     this.HitBox = null;
     this.Position = Player.StartingPosition;
     this.Element!.style.opacity = '50%';
+    this.Element!.style.zIndex = '99';
 
     setTimeout(() => {
-      this.HitBox = defaultHitBox;
-      this.Element!.style.opacity = '100%';
+      if (this.Element) {
+        this.HitBox = defaultHitBox;
+        this.Element.style.opacity = '100%';
+      }
     }, 1000);
   }
 
   private handleGamepadEvent = (): void => {
-    this.handleSteeringControls();
-    this.handleVerticalThrust();
-    this.handleHorizontalThrust();
+    if (this.Element) {
+      this.handleSteeringControls();
+      this.handleVerticalThrust();
+      this.handleHorizontalThrust();
 
-    if (this.missileReady && this.controller.GetControlValue(Controls.Fire)) {
-      this.missileReady = false;
-      (async () => {
+      if (this.missileReady && this.controller.GetControlValue(Controls.Fire)) {
+        this.missileReady = false;
         const missile = new Missile();
-
-        const element = document.createElement('div');
-        element.innerHTML = await missile.Render();
-        this.App.Main?.appendChild(element.firstChild as HTMLDivElement);
-
-        Asap(() => {
+        missile.AddToLevel(() => {
           const missileAngle = this.Angle - 180;
           const launchOffset = this.utility.GetPositionChangeFromDistanceAndAngle(this.Size.width, missileAngle);
           missile.Angle = missileAngle;
           missile.Position = { x: this.Position.x + launchOffset.x, y: this.Position.y + launchOffset.y };
         });
-      })();
 
-      setTimeout(() => {
-        this.missileReady = true;
-      }, this.missileCoolDown);
+        setTimeout(() => {
+          this.missileReady = true;
+        }, this.missileCoolDown);
+      }
     }
   }
 

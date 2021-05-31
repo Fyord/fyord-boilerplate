@@ -1,12 +1,14 @@
 import { ParseJsx, Asap } from 'fyord';
+import { Strings } from 'tsbase/Functions/Strings';
 import { Character, Controller } from '../../core/module';
 import { CharacterTypes, Controls } from '../../enums/module';
 import styles from './player.module.scss';
 
 export class Player extends Character {
   CharacterType = CharacterTypes.Player;
-
   Template = async () => <div class={styles.player}></div>;
+
+  private playerControlsRef = Strings.Empty;
 
   constructor(
     private controller = Controller.Instance
@@ -16,7 +18,7 @@ export class Player extends Character {
     Asap(() => {
       this.Size = { height: 40, width: 40 };
 
-      this.game.PlayerControls.Subscribe(() => {
+      this.playerControlsRef = this.game.PlayerControls.Subscribe(() => {
         const upValue = this.controller.GetControlValue(Controls.Up);
         const downValue = this.controller.GetControlValue(Controls.Down);
         const leftValue = this.controller.GetControlValue(Controls.Left);
@@ -28,5 +30,9 @@ export class Player extends Character {
         };
       });
     });
+  }
+
+  Disconnected = () => {
+    this.game.PlayerControls.Cancel(this.playerControlsRef);
   }
 }

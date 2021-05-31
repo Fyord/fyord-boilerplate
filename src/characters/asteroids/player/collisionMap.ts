@@ -1,6 +1,6 @@
 import { CharacterTypes, Images, Sounds } from '../../../enums/module';
 import { Character, Game, Utility } from '../../../core/module';
-import { WormholeCharacter } from '../wormhole/wormhole';
+import { Wormhole } from '../wormhole/wormhole';
 import { Player } from './player';
 import { Router } from 'fyord';
 
@@ -13,7 +13,7 @@ const handleDestructionCollision = (player: Player): void => {
   }, 1000);
 };
 
-const handleWormholeCollision = (player: Player, wormhole: WormholeCharacter): void => {
+const handleWormholeCollision = (player: Player, wormhole: Wormhole): void => {
   Game.Instance.Animation(() => {
     player.Element!.style.transition = 'all 3s';
     player.Position = {
@@ -24,8 +24,7 @@ const handleWormholeCollision = (player: Player, wormhole: WormholeCharacter): v
     Utility.Instance.PlayAudio(Sounds.Wormhole);
     player.Element!.style.transform = 'rotate(5000deg)';
   }, () => {
-    const route = (wormhole as WormholeCharacter).Route;
-    Router.Instance().RouteTo(route, true);
+    Router.Instance().RouteTo(wormhole.Route, true);
   }, 3000);
 };
 
@@ -35,5 +34,5 @@ export const PlayerCollisionMap = new Map<CharacterTypes, CollisionFunction>([
   [CharacterTypes.Asteroid, (player: Player) => handleDestructionCollision(player)],
   [CharacterTypes.Planet, (player: Player) => handleDestructionCollision(player)],
   [CharacterTypes.Missile, (player: Player) => handleDestructionCollision(player)],
-  [CharacterTypes.Wormhole, (player: Player, wormhole?: Character) => handleWormholeCollision(player, wormhole as WormholeCharacter)]
+  [CharacterTypes.Wormhole, (player: Player, wormhole?: Character) => handleWormholeCollision(player, wormhole as Wormhole)]
 ]);

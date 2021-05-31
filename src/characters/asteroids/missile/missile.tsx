@@ -9,9 +9,6 @@ const keys = {
 };
 
 export class Missile extends Character {
-  CharacterType = CharacterTypes.Missile;
-  HitBox = { radius: 0, offset: 0 };
-
   private globalCollisionEventRef = Strings.Empty;
   private localCollisionEventRef = Strings.Empty;
 
@@ -27,22 +24,29 @@ export class Missile extends Character {
   }
 
   constructor() {
-    super();
+    super({
+      height: 40,
+      width: 40
+    });
 
     this.fuel = this.game.MapBounds.maxX;
 
     Asap(() => {
-      this.Size = { height: 40, width: 40 };
+      this.CharacterType = CharacterTypes.Missile;
+      this.HitBox = { radius: 0, offset: 0 };
 
       this.utility.PlayAudio(Sounds.Launch);
 
       this.globalCollisionEventRef = this.game.CollisionEvent.Subscribe(() => {
-        if (this.fuel >= this.pixelsPerFrame) {
-          const positionChange = this.utility.GetPositionChangeFromDistanceAndAngle(this.pixelsPerFrame, this.Angle);
-          this.Position = { x: this.Position.x + positionChange.x, y: this.Position.y + positionChange.y };
-          this.fuel -= this.pixelsPerFrame;
-        } else {
-          this.detonate();
+        if (this.Element) {
+
+          if (this.fuel >= this.pixelsPerFrame) {
+            const positionChange = this.utility.GetPositionChangeFromDistanceAndAngle(this.pixelsPerFrame, this.Angle);
+            this.Position = { x: this.Position.x + positionChange.x, y: this.Position.y + positionChange.y };
+            this.fuel -= this.pixelsPerFrame;
+          } else {
+            this.detonate();
+          }
         }
       });
 
@@ -54,6 +58,11 @@ export class Missile extends Character {
         }
       });
     });
+  }
+
+  Disconnected = () => {
+    this.game.CollisionEvent.Cancel(this.globalCollisionEventRef);
+    this.Collision.Cancel(this.localCollisionEventRef);
   }
 
   public GetHitPoints(): Array<Position> {
@@ -70,8 +79,7 @@ export class Missile extends Character {
   }
 
   private detonate = (): void => {
-    this.game.CollisionEvent.Cancel(this.globalCollisionEventRef);
-    this.Collision.Cancel(this.localCollisionEventRef);
+    this.Disconnected();
 
     this.game.Animation(() => {
       this.utility.PlayAudio(Sounds.MissileExplosion);
@@ -80,7 +88,7 @@ export class Missile extends Character {
       missileImage.src = Images.MissileExplosion;
     }, () => {
       if (this.Element) {
-        this.App.Main.removeChild(this.Element as HTMLElement);
+        this.Element.remove();
       }
     }, 1000, false);
   }
