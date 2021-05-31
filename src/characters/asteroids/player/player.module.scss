@@ -1,0 +1,17 @@
+.player {
+  z-index: 10;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  z-index: 99;
+
+  svg {
+    position: relative;
+    transform: rotate(-90deg);
+  }
+
+  img {
+    height: 100%;
+    width: 100%;
+  }
+}

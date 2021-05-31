@@ -3,5 +3,12 @@ export enum Controls {
   Up,
   Down,
   Left,
-  Right
+  Right,
+  ThrustUp,
+  ThrustDown,
+  ThrustLeft,
+  ThrustRight,
+  RotateLeft,
+  RotateRight,
+  Fire
 }

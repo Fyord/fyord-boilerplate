@@ -19,7 +19,15 @@ export class Controller {
     [Controls.Up, { Key: Keys.ArrowUp, GamepadButton: null, GamepadAxis: { Axis: 1, Positive: false } }],
     [Controls.Down, { Key: Keys.ArrowDown, GamepadButton: null, GamepadAxis: { Axis: 1, Positive: true } }],
     [Controls.Left, { Key: Keys.ArrowLeft, GamepadButton: null, GamepadAxis: { Axis: 0, Positive: false } }],
-    [Controls.Right, { Key: Keys.ArrowRight, GamepadButton: null, GamepadAxis: { Axis: 0, Positive: true } }]
+    [Controls.Right, { Key: Keys.ArrowRight, GamepadButton: null, GamepadAxis: { Axis: 0, Positive: true } }],
+    [Controls.ThrustUp, { Key: Keys.W, GamepadButton: null, GamepadAxis: { Axis: 1, Positive: false } }],
+    [Controls.ThrustDown, { Key: Keys.S, GamepadButton: null, GamepadAxis: { Axis: 1, Positive: true } }],
+    [Controls.ThrustLeft, { Key: Keys.A, GamepadButton: null, GamepadAxis: { Axis: 0, Positive: false } }],
+    [Controls.ThrustRight, { Key: Keys.D, GamepadButton: null, GamepadAxis: { Axis: 0, Positive: true } }],
+    [Controls.RotateLeft, { Key: Keys.ArrowLeft, GamepadButton: null, GamepadAxis: { Axis: 2, Positive: false } }],
+    [Controls.RotateRight, { Key: Keys.ArrowRight, GamepadButton: null, GamepadAxis: { Axis: 2, Positive: true } }],
+    [Controls.Pause, { Key: Keys.Escape, GamepadButton: 9, GamepadAxis: null }],
+    [Controls.Fire, { Key: Keys.Space, GamepadButton: 6, GamepadAxis: null }]
   ]);
 
   private get gamepad(): Gamepad | null {

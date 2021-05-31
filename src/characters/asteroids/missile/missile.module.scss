@@ -1,0 +1,11 @@
+.missile {
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+
+  img {
+    height: 100%;
+    width: 100%;
+    transform: rotate(90deg);
+  }
+}

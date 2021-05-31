@@ -1,8 +1,10 @@
-import { Strings } from 'tsbase/Functions/Strings';
+import { Asap, ParseJsx } from 'fyord';
 import { Controller, Position, Character } from '../../../core/module';
-import { Controls, CharacterTypes, Selectors } from '../../enums/module';
-import { CollisionFunction, PlayerCollisionMap } from './PlayerCollisionMap';
+import { Controls, CharacterTypes } from '../../../enums/module';
+import { CollisionFunction, PlayerCollisionMap } from './collisionMap';
 import { playerSprite } from './sprite';
+import styles from './player.module.scss';
+import { Missile } from '../missile/missile';
 
 export const playerIds = {
   spriteContainer: 'spriteContainer'
@@ -12,53 +14,43 @@ const defaultSize = { height: 40, width: 40 };
 const defaultHitBox = { radius: 0, offset: 0 };
 
 export class Player extends Character {
-  public static StartingPosition: Position = { x: 20, y: 20};
+  Template = async () => <div id={playerIds.spriteContainer} class={`${styles.player} ${CharacterTypes.Player}`}>{playerSprite}</div>;
+
+  public static StartingPosition: Position = { x: 20, y: 20 };
 
   public get SpriteContainer(): HTMLDivElement {
     return document.getElementById(playerIds.spriteContainer) as HTMLDivElement;
   }
   private missileReady = true;
   private missileCoolDown = 200;
-  private gamepadEventRef = Strings.Empty;
-  private collisionEventRef = Strings.Empty;
 
   constructor(private controller = Controller.Instance) {
     super();
 
-    this.InitAttributes(() => {
+    Asap(() => {
       this.CharacterType = CharacterTypes.Player;
       this.Size = defaultSize;
       this.Spawn();
+
+      this.game.PlayerControls.Subscribe(() => this.handleGamepadEvent());
+
+      this.Collision.Subscribe((character: Character | undefined) => {
+        if (character && PlayerCollisionMap.has(character.CharacterType)) {
+          (PlayerCollisionMap.get(character.CharacterType) as CollisionFunction)(this, character);
+        }
+      });
     });
-  }
-
-  protected template = (): string => /*html*/ `
-    <div id="${playerIds.spriteContainer}" class="player-character">${playerSprite}</div>`;
-
-  protected onPostRender = (): void => {
-    this.gamepadEventRef = this.game.ShipControlsEvent.Subscribe(() => this.handleGamepadEvent());
-
-    this.collisionEventRef = this.Collision.Subscribe((character: Character | undefined) => {
-      if (character && PlayerCollisionMap.has(character.CharacterType)) {
-        (PlayerCollisionMap.get(character.CharacterType) as CollisionFunction)(this, character);
-      }
-    });
-  }
-
-  public disconnectedCallback(): void {
-    this.game.ShipControlsEvent.Cancel(this.gamepadEventRef);
-    this.game.CollisionEvent.Cancel(this.collisionEventRef);
   }
 
   public Spawn = (): void => {
     this.SpriteContainer.innerHTML = playerSprite;
     this.HitBox = null;
     this.Position = Player.StartingPosition;
-    this.style.opacity = '50%';
+    this.Element!.style.opacity = '50%';
 
     setTimeout(() => {
       this.HitBox = defaultHitBox;
-      this.style.opacity = '100%';
+      this.Element!.style.opacity = '100%';
     }, 1000);
   }
 
@@ -69,15 +61,20 @@ export class Player extends Character {
 
     if (this.missileReady && this.controller.GetControlValue(Controls.Fire)) {
       this.missileReady = false;
+      (async () => {
+        const missile = new Missile();
 
-      const missile = document.createElement(Selectors.Missile) as MissileCharacter;
-      missile.InitAttributes(() => {
-        const missileAngle = this.Angle - 180;
-        const launchOffset = this.utility.GetPositionChangeFromDistanceAndAngle(this.Size.width, missileAngle);
-        missile.Angle = missileAngle;
-        missile.Position = { x: this.Position.x + launchOffset.x, y: this.Position.y + launchOffset.y };
-      });
-      this.parentElement?.appendChild(missile);
+        const element = document.createElement('div');
+        element.innerHTML = await missile.Render();
+        this.App.Main?.appendChild(element.firstChild as HTMLDivElement);
+
+        Asap(() => {
+          const missileAngle = this.Angle - 180;
+          const launchOffset = this.utility.GetPositionChangeFromDistanceAndAngle(this.Size.width, missileAngle);
+          missile.Angle = missileAngle;
+          missile.Position = { x: this.Position.x + launchOffset.x, y: this.Position.y + launchOffset.y };
+        });
+      })();
 
       setTimeout(() => {
         this.missileReady = true;
@@ -91,6 +88,7 @@ export class Player extends Character {
 
     if (Math.abs(rotationValue) > .5) {
       const proposedRotation = this.Angle + rotationValue;
+      // eslint-disable-next-line no-nested-ternary
       this.Angle = Math.abs(proposedRotation) <= 360 ?
         proposedRotation :
         (proposedRotation > 0 ? proposedRotation - 360 : proposedRotation + 360);
