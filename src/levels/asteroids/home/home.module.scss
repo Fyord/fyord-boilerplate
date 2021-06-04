@@ -17,21 +17,3 @@ h1 {
 p {
   max-width: 40vw;
 }
-
-table {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-  background-color: white;
-  color: black;
-  min-width: 40vw;
-}
-
-td, th {
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 8px;
-}
-
-tr:nth-child(even) {
-  background-color: #dddddd;
-}

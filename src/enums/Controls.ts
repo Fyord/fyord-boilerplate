@@ -1,5 +1,6 @@
 export enum Controls {
   Pause,
+  Continue,
   Up,
   Down,
   Left,

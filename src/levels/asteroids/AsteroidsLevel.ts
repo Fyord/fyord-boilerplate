@@ -33,9 +33,8 @@ export abstract class AsteroidsLevel extends Level {
   }
 
   private spawnWormholeWhenAsteroidsCleared() {
-    Asteroid.Asteroids = Asteroid.Asteroids.filter(a => !!a.Element);
     this.collisionEventRef = this.game.CollisionEvent.Subscribe(() => {
-      if (Asteroid.Asteroids.length === 0) {
+      if (Asteroid.Asteroids.filter(a => !!a.Element).length === 0) {
         this.game.CollisionEvent.Cancel(this.collisionEventRef);
         this.spawnWormHole();
       }

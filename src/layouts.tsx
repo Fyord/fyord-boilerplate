@@ -1,12 +1,8 @@
 import { ParseJsx, Fragment } from 'fyord';
-import { FramerateMonitor } from './components/module';
+import { FramerateMonitor, Menu } from './components/module';
 
 export const defaultLayout = async () => <>
   {await new FramerateMonitor().Render()}
-
-  <div class="menu" id="menu">
-    <p>Game Paused</p>
-  </div>
-
+  {await new Menu().Render()}
   <main></main>
 </>;

@@ -1,8 +1,8 @@
 import { GameLoop } from 'tsbase/Utility/Timers/GameLoop';
 import { Observable } from 'tsbase/Patterns/Observable/Observable';
+import { App } from 'fyord';
 import { Sounds } from '../../enums/Sounds';
 import { Utility } from '../utility/utility';
-import { App } from 'fyord';
 import { Character } from '../character/character';
 import { MapStyles } from '../../enums/MapStyles';
 
@@ -16,6 +16,7 @@ export class Game {
   public GlobalEvent = new Observable<any>();
   public PlayerControls = new Observable<any>();
   public CollisionEvent = new Observable<any>();
+  public Paused = new Observable<boolean>();
   public MapBounds = {
     minX: 0,
     minY: 0,
@@ -68,14 +69,11 @@ export class Game {
 
   public TogglePause = (): void => {
     this.utility.PlayAudio(Sounds.Pause);
-    const menuElement = document.getElementById('menu') as HTMLDivElement;
 
     if (this.paused) {
       this.resume();
-      menuElement.style.display = 'none';
     } else {
       this.pause();
-      menuElement.style.display = 'flex';
     }
   }
 
@@ -83,11 +81,13 @@ export class Game {
     this.PlayerControls.Discontinue();
     this.CollisionEvent.Discontinue();
     this.paused = true;
+    this.Paused.Publish(true);
   }
 
   private resume = (): void => {
     this.PlayerControls.Reinstate();
     this.CollisionEvent.Reinstate();
     this.paused = false;
+    this.Paused.Publish(false);
   }
 }

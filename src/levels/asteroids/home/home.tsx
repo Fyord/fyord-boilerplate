@@ -1,5 +1,6 @@
 import { ParseJsx, Route, Fragment } from 'fyord';
 import { Asteroid } from '../../../characters/asteroids/asteroid/asteroid';
+import { controlsSection } from '../../../components/controlsSection';
 import { Images } from '../../../enums/module';
 import { Routes } from '../../../enums/Routes';
 import { AsteroidsLevel } from '../AsteroidsLevel';
@@ -24,37 +25,7 @@ export class Home extends AsteroidsLevel {
           </div>
         </section>
 
-
-        <section>
-          <h2>Controls</h2>
-          <table>
-            <tr>
-              <th>Action</th>
-              <th>Keyboard</th>
-              <th>Controller</th>
-            </tr>
-            <tr>
-              <td>Thrust</td>
-              <td>WASD</td>
-              <td>Left Stick</td>
-            </tr>
-            <tr>
-              <td>Rotation</td>
-              <td>← Left | Right →</td>
-              <td>Right Stick</td>
-            </tr>
-            <tr>
-              <td>Fire</td>
-              <td>Space</td>
-              <td>Left/Right Trigger</td>
-            </tr>
-            <tr>
-              <td>Pause</td>
-              <td>Escape</td>
-              <td>Start</td>
-            </tr>
-          </table>
-        </section>
+        {controlsSection}
       </div>
 
       {await new Asteroid({

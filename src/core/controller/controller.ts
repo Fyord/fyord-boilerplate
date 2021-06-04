@@ -27,7 +27,8 @@ export class Controller {
     [Controls.ThrustRight, { Key: Keys.D, GamepadButtons: null, GamepadAxis: { Axis: 0, Positive: true } }],
     [Controls.RotateLeft, { Key: Keys.ArrowLeft, GamepadButtons: null, GamepadAxis: { Axis: 2, Positive: false } }],
     [Controls.RotateRight, { Key: Keys.ArrowRight, GamepadButtons: null, GamepadAxis: { Axis: 2, Positive: true } }],
-    [Controls.Fire, { Key: Keys.Space, GamepadButtons: [6, 7], GamepadAxis: null }]
+    [Controls.Fire, { Key: Keys.Space, GamepadButtons: [6, 7], GamepadAxis: null }],
+    [Controls.Continue, { Key: Keys.Enter, GamepadButtons: [0], GamepadAxis: null }]
   ]);
 
   private get gamepad(): Gamepad | null {
@@ -55,6 +56,7 @@ export class Controller {
 
     this.game.GlobalEvent.Subscribe(() => {
       this.handlePauseButton();
+      this.handleContinueButton();
     });
   }
 
@@ -111,7 +113,19 @@ export class Controller {
 
       setTimeout(() => {
         this.game.GlobalEvent.Reinstate();
-      }, 250);
+      }, 500);
+    }
+  }
+
+  private handleContinueButton() {
+    if (this.GetControlValue(Controls.Continue)) {
+      const anchor = document.querySelector('a');
+      anchor?.click();
+      this.game.GlobalEvent.Discontinue();
+
+      setTimeout(() => {
+        this.game.GlobalEvent.Reinstate();
+      }, 1000);
     }
   }
 }

@@ -43,7 +43,7 @@ export class GameOver extends AsteroidsLevel {
         width: 200,
         centered: true,
         angle: 45
-      }, 10).Render()}
+      }, 6).Render()}
     </>;
   }
 }
