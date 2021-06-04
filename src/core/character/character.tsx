@@ -7,6 +7,10 @@ import { HitBox, Position, Size, StartingSizeAndPosition } from '../types';
 import { Utility } from '../utility/utility';
 
 export abstract class Character extends Component {
+  public CharacterType = CharacterTypes.Other;
+  public HitBox: HitBox = null;
+  public Collision = new Observable<Character>();
+
   private angle: number = 0;
   public get Angle(): number {
     return this.angle;
@@ -71,10 +75,6 @@ export abstract class Character extends Component {
     this.position.y = newY;
     this.Element!.style.top = `${newY}px`;
   }
-
-  public CharacterType = CharacterTypes.Other;
-  public HitBox: HitBox = null;
-  public Collision = new Observable<Character>();
 
   constructor(
     startingSizeAndPosition?: StartingSizeAndPosition,

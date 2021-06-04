@@ -1,10 +1,11 @@
 import { EventTypes } from 'fyord';
+import { Queryable } from 'tsbase/Collections/Queryable';
 import { Controls, Keys } from '../../enums/module';
 import { Game } from '../game/game';
 
 export type ControlConfig = {
   Key: string | null,
-  GamepadButton: number | null,
+  GamepadButtons: number[] | null,
   GamepadAxis: { Axis: number, Positive: boolean } | null
 };
 
@@ -15,19 +16,18 @@ export class Controller {
 
   private keyboard = {};
   private controlMap = new Map<Controls, ControlConfig>([
-    [Controls.Pause, { Key: Keys.Escape, GamepadButton: 9, GamepadAxis: null }],
-    [Controls.Up, { Key: Keys.ArrowUp, GamepadButton: null, GamepadAxis: { Axis: 1, Positive: false } }],
-    [Controls.Down, { Key: Keys.ArrowDown, GamepadButton: null, GamepadAxis: { Axis: 1, Positive: true } }],
-    [Controls.Left, { Key: Keys.ArrowLeft, GamepadButton: null, GamepadAxis: { Axis: 0, Positive: false } }],
-    [Controls.Right, { Key: Keys.ArrowRight, GamepadButton: null, GamepadAxis: { Axis: 0, Positive: true } }],
-    [Controls.ThrustUp, { Key: Keys.W, GamepadButton: null, GamepadAxis: { Axis: 1, Positive: false } }],
-    [Controls.ThrustDown, { Key: Keys.S, GamepadButton: null, GamepadAxis: { Axis: 1, Positive: true } }],
-    [Controls.ThrustLeft, { Key: Keys.A, GamepadButton: null, GamepadAxis: { Axis: 0, Positive: false } }],
-    [Controls.ThrustRight, { Key: Keys.D, GamepadButton: null, GamepadAxis: { Axis: 0, Positive: true } }],
-    [Controls.RotateLeft, { Key: Keys.ArrowLeft, GamepadButton: null, GamepadAxis: { Axis: 2, Positive: false } }],
-    [Controls.RotateRight, { Key: Keys.ArrowRight, GamepadButton: null, GamepadAxis: { Axis: 2, Positive: true } }],
-    [Controls.Pause, { Key: Keys.Escape, GamepadButton: 9, GamepadAxis: null }],
-    [Controls.Fire, { Key: Keys.Space, GamepadButton: 6, GamepadAxis: null }]
+    [Controls.Pause, { Key: Keys.Escape, GamepadButtons: [9], GamepadAxis: null }],
+    [Controls.Up, { Key: Keys.ArrowUp, GamepadButtons: null, GamepadAxis: { Axis: 1, Positive: false } }],
+    [Controls.Down, { Key: Keys.ArrowDown, GamepadButtons: null, GamepadAxis: { Axis: 1, Positive: true } }],
+    [Controls.Left, { Key: Keys.ArrowLeft, GamepadButtons: null, GamepadAxis: { Axis: 0, Positive: false } }],
+    [Controls.Right, { Key: Keys.ArrowRight, GamepadButtons: null, GamepadAxis: { Axis: 0, Positive: true } }],
+    [Controls.ThrustUp, { Key: Keys.W, GamepadButtons: null, GamepadAxis: { Axis: 1, Positive: false } }],
+    [Controls.ThrustDown, { Key: Keys.S, GamepadButtons: null, GamepadAxis: { Axis: 1, Positive: true } }],
+    [Controls.ThrustLeft, { Key: Keys.A, GamepadButtons: null, GamepadAxis: { Axis: 0, Positive: false } }],
+    [Controls.ThrustRight, { Key: Keys.D, GamepadButtons: null, GamepadAxis: { Axis: 0, Positive: true } }],
+    [Controls.RotateLeft, { Key: Keys.ArrowLeft, GamepadButtons: null, GamepadAxis: { Axis: 2, Positive: false } }],
+    [Controls.RotateRight, { Key: Keys.ArrowRight, GamepadButtons: null, GamepadAxis: { Axis: 2, Positive: true } }],
+    [Controls.Fire, { Key: Keys.Space, GamepadButtons: [6, 7], GamepadAxis: null }]
   ]);
 
   private get gamepad(): Gamepad | null {
@@ -94,8 +94,11 @@ export class Controller {
       } else {
         controllerValue = axisValue < 0 ? axisValue : 0;
       }
-    } else if (this.gamepad && config.GamepadButton) {
-      controllerValue = this.gamepad.buttons[config.GamepadButton].value;
+    } else if (this.gamepad && config.GamepadButtons) {
+      const values = this.gamepad.buttons
+        .filter((_b, i) => config.GamepadButtons?.includes(i))
+        .map(b => b.value);
+      controllerValue = Queryable.From(values).Max();
     }
 
     return Math.abs(controllerValue);

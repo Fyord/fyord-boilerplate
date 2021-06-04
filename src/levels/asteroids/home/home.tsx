@@ -46,7 +46,7 @@ export class Home extends AsteroidsLevel {
             <tr>
               <td>Fire</td>
               <td>Space</td>
-              <td>Left Trigger</td>
+              <td>Left/Right Trigger</td>
             </tr>
             <tr>
               <td>Pause</td>
