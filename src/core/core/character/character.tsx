@@ -1,13 +1,13 @@
-import { Asap, Component } from 'fyord';
+import { Strings } from 'tsbase/Functions/Strings';
 import { Observable } from 'tsbase/Patterns/Observable/Observable';
-import { CharacterTypes } from '../../enums/CharacterTypes';
-import { MapStyles } from '../../enums/MapStyles';
+import { Asap, Component } from 'fyord';
+import { HitBox, Position, Size, StartingSizeAndPosition } from '../../types/module';
 import { Game } from '../game/game';
-import { HitBox, Position, Size, StartingSizeAndPosition } from '../types';
-import { Utility } from '../utility/utility';
+import { MapStyles } from '../../enums/mapStyles';
+import { CollisionService } from '../services/collisionService/collisionService';
 
 export abstract class Character extends Component {
-  public CharacterType = CharacterTypes.Other;
+  public CharacterType = Strings.Empty;
   public HitBox: HitBox = null;
   public Collision = new Observable<Character>();
 
@@ -79,7 +79,7 @@ export abstract class Character extends Component {
   constructor(
     startingSizeAndPosition?: StartingSizeAndPosition,
     protected game = Game.Instance,
-    protected utility = Utility.Instance
+    protected utility = CollisionService.Instance
   ) {
     super();
 

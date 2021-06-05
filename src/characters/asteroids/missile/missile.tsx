@@ -1,6 +1,6 @@
 import { Strings } from 'tsbase/Functions/Strings';
 import { Asap, ParseJsx } from 'fyord';
-import { Character, Position } from '../../../core/module';
+import { Character, GetPositionChangeFromDistanceAndAngle, PlayAudio, Position } from '../../../core/module';
 import { CharacterTypes, Images, Sounds } from '../../../enums/module';
 import styles from './missile.module.scss';
 
@@ -35,13 +35,13 @@ export class Missile extends Character {
       this.CharacterType = CharacterTypes.Missile;
       this.HitBox = { radius: 0, offset: 0 };
 
-      this.utility.PlayAudio(Sounds.Launch);
+      PlayAudio(Sounds.Launch);
 
       this.globalCollisionEventRef = this.game.CollisionEvent.Subscribe(() => {
         if (this.Element) {
 
           if (this.fuel >= this.pixelsPerFrame) {
-            const positionChange = this.utility.GetPositionChangeFromDistanceAndAngle(this.pixelsPerFrame, this.Angle);
+            const positionChange = GetPositionChangeFromDistanceAndAngle(this.pixelsPerFrame, this.Angle);
             this.Position = { x: this.Position.x + positionChange.x, y: this.Position.y + positionChange.y };
             this.fuel -= this.pixelsPerFrame;
           } else {
@@ -66,7 +66,7 @@ export class Missile extends Character {
   }
 
   public GetHitPoints(): Array<Position> {
-    const offset = this.utility.GetPositionChangeFromDistanceAndAngle(this.pixelsPerFrame - 3, this.Angle);
+    const offset = GetPositionChangeFromDistanceAndAngle(this.pixelsPerFrame - 3, this.Angle);
 
     return [
       this.nose,
@@ -82,7 +82,7 @@ export class Missile extends Character {
     this.Disconnected();
 
     this.game.Animation(() => {
-      this.utility.PlayAudio(Sounds.MissileExplosion);
+      PlayAudio(Sounds.MissileExplosion);
 
       const missileImage = document.getElementById(this.Ids(keys.missileImage)) as HTMLImageElement;
       missileImage.src = Images.MissileExplosion;

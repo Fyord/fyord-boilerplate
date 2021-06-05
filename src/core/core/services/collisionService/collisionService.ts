@@ -1,32 +1,12 @@
 import { Queryable } from 'tsbase/Collections/Queryable';
-import { Character } from '../character/character';
-import { Sounds } from '../../enums/module';
-import { Position } from '../types';
+import { Character } from '../../character/character';
 
-export class Utility {
-  private static instance: Utility | null = null;
-  public static get Instance(): Utility { return this.instance || (this.instance = new Utility()); }
+export class CollisionService {
+  private static instance: CollisionService | null = null;
+  public static get Instance(): CollisionService { return this.instance || (this.instance = new CollisionService()); }
   public static Destroy(): void { this.instance = null; }
 
   private constructor() { }
-
-  public GetPositionChangeFromDistanceAndAngle(distance: number, angle: number): Position {
-    const aRad = angle * (Math.PI / 180);
-    const aValue = distance * Math.sin(aRad);
-    const bValue = distance * Math.cos(aRad);
-
-    return { x: bValue, y: aValue };
-  }
-
-  public async PlayAudio(audioSourceUrl: Sounds): Promise<any> {
-    return new Promise(resolve => {
-      const audio = new Audio(audioSourceUrl);
-      audio.play();
-      audio.onended = (() => {
-        resolve(true);
-      });
-    });
-  }
 
   public DetectCollisions = (characters: Array<Character>): void => {
     characters.filter(c => !!c.Element && c.HitBox).forEach(character => {

@@ -1,7 +1,7 @@
 import { Strings } from 'tsbase/Functions/Strings';
 import { Queryable } from 'tsbase/Collections/Queryable';
 import { Asap, ParseJsx, RawHtml } from 'fyord';
-import { Character, Position, StartingSizeAndPosition } from '../../../core/module';
+import { Character, GetPositionChangeFromDistanceAndAngle, PlayAudio, Position, StartingSizeAndPosition } from '../../../core/module';
 import { Images, CharacterTypes, Sounds } from '../../../enums/module';
 import { asteroidSprites } from './sprites';
 import styles from './asteroid.module.scss';
@@ -26,7 +26,7 @@ export class Asteroid extends Character {
       this.Angle = this.startingSizeAndPosition?.angle || Queryable.From([5, 65, 125, 185, 245, 305, 365]).GetRandom() as number;
 
       this.globalCollisionEventRef = this.game.CollisionEvent.Subscribe(() => {
-        const positionChange = this.utility.GetPositionChangeFromDistanceAndAngle(this.velocity, this.Angle);
+        const positionChange = GetPositionChangeFromDistanceAndAngle(this.velocity, this.Angle);
         this.Position = { x: this.Position.x + positionChange.x, y: this.Position.y + positionChange.y };
       });
 
@@ -52,7 +52,7 @@ export class Asteroid extends Character {
 
     this.game.Animation(() => {
       this.HitBox = null;
-      this.utility.PlayAudio(Sounds.MissileExplosion);
+      PlayAudio(Sounds.MissileExplosion);
       (this.Element!.firstChild as HTMLDivElement).innerHTML = `<img src=${Images.MissileExplosion} alt="Explosion" />`;
 
       const shouldFracture = this.Size.width >= this.minimalWidth &&

@@ -4,5 +4,5 @@ export enum CharacterTypes {
   Planet = 'character-planet',
   Wormhole = 'character-wormhole',
   Missile = 'character-missile',
-  Other = 'character-other'
+  Other = ''
 }

@@ -1,10 +1,9 @@
 import { GameLoop } from 'tsbase/Utility/Timers/GameLoop';
 import { Observable } from 'tsbase/Patterns/Observable/Observable';
 import { App } from 'fyord';
-import { Sounds } from '../../enums/Sounds';
-import { Utility } from '../utility/utility';
+import { CollisionService } from '../services/collisionService/collisionService';
+import { MapStyles } from '../../enums/mapStyles';
 import { Character } from '../character/character';
-import { MapStyles } from '../../enums/MapStyles';
 
 export class Game {
   public static TargetFramerate = 60;
@@ -31,7 +30,7 @@ export class Game {
 
   private constructor(
     public MapStyle = MapStyles.Wrapping,
-    private utility = Utility.Instance,
+    private collisionService = CollisionService.Instance,
     private app = App.Instance()
   ) {
     this.GameLoop.GameEvents = [
@@ -41,7 +40,7 @@ export class Game {
     ];
 
     this.CollisionEvent.Subscribe(() => {
-      this.utility.DetectCollisions(this.Characters);
+      this.collisionService.DetectCollisions(this.Characters);
     });
 
     this.app.Router.Route.Subscribe(async () => {
@@ -68,8 +67,6 @@ export class Game {
   }
 
   public TogglePause = (): void => {
-    this.utility.PlayAudio(Sounds.Pause);
-
     if (this.paused) {
       this.resume();
     } else {

@@ -1,11 +1,11 @@
+import { Strings } from 'tsbase/Functions/Strings';
 import { Asap, ParseJsx } from 'fyord';
-import { Controller, Position, Character } from '../../../core/module';
+import { Controller, Position, Character, GetPositionChangeFromDistanceAndAngle } from '../../../core/module';
 import { Controls, CharacterTypes } from '../../../enums/module';
 import { CollisionFunction, PlayerCollisionMap } from './collisionMap';
 import { playerSprite } from './sprite';
 import styles from './player.module.scss';
 import { Missile } from '../missile/missile';
-import { Strings } from 'tsbase/Functions/Strings';
 
 export const playerIds = {
   spriteContainer: 'spriteContainer'
@@ -74,7 +74,7 @@ export class Player extends Character {
         const missile = new Missile();
         missile.AddToLevel(() => {
           const missileAngle = this.Angle - 180;
-          const launchOffset = this.utility.GetPositionChangeFromDistanceAndAngle(this.Size.width, missileAngle);
+          const launchOffset = GetPositionChangeFromDistanceAndAngle(this.Size.width, missileAngle);
           missile.Angle = missileAngle;
           missile.Position = { x: this.Position.x + launchOffset.x, y: this.Position.y + launchOffset.y };
         });
@@ -128,7 +128,7 @@ export class Player extends Character {
   }
 
   private applyThrustAtAngle = (thrustValue: number, angle: number): void => {
-    const positionChange = this.utility.GetPositionChangeFromDistanceAndAngle(thrustValue, angle);
+    const positionChange = GetPositionChangeFromDistanceAndAngle(thrustValue, angle);
     this.updatePosition(positionChange.y, positionChange.x);
   }
 
