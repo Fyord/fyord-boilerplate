@@ -1,4 +1,4 @@
-import { Environments } from 'fyord';
+import { Environments } from 'fyord-game-engine';
 
 export enum EnvironmentVariables {
   Mode = 'mode',

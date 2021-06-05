@@ -7,3 +7,4 @@ TESTS*.xml
 .DS_Store
 workspace.*
 .vscode
+*.cache

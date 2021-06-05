@@ -1,4 +1,4 @@
-import { TestHelpers, Asap } from 'fyord';
+import { TestHelpers, Asap } from 'fyord-game-engine';
 import { FramerateMonitor } from './framerateMonitor';
 
 describe('Framerate', () => {

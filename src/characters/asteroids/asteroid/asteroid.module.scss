@@ -1,0 +1,37 @@
+.asteroid {
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+
+  svg,
+  img {
+    height: 100%;
+    width: 100%;
+  }
+
+  &.right {
+    animation: clockwise infinite 20s linear;
+    @keyframes clockwise{
+      from{
+        transform:rotate(0deg);
+      }
+
+      to{
+        transform:rotate(360deg);
+      }
+    }
+  }
+
+  &.left {
+    animation: counterclockwise infinite 20s linear;
+    @keyframes counterclockwise{
+      from{
+        transform:rotate(360deg);
+      }
+
+      to{
+        transform:rotate(0deg);
+      }
+    }
+  }
+}

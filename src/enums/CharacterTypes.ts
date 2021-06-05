@@ -1,4 +1,8 @@
 export enum CharacterTypes {
-  Player,
-  Other
+  Player = 'character-player',
+  Asteroid = 'character-asteroid',
+  Planet = 'character-planet',
+  Wormhole = 'character-wormhole',
+  Missile = 'character-missile',
+  Other = ''
 }

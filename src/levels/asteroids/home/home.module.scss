@@ -1,0 +1,19 @@
+@import '../../../styles/classes.scss';
+
+.container {
+  @extend .non-playable-level-container;
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1 {
+  margin: 0;
+}
+
+p {
+  max-width: 40vw;
+}
