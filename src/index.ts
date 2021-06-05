@@ -1,6 +1,5 @@
-import { App, Environments } from 'fyord';
+import { App, ControlConfig, Controller, Environments, Game, PlayAudio } from 'fyord-game-engine';
 import { defaultLayout } from './layouts';
-import { ControlConfig, Controller, Game, PlayAudio } from './core/module';
 import { Controls, Keys, Sounds } from './enums/module';
 
 import './styles/base.scss';

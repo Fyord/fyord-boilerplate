@@ -1,6 +1,5 @@
 import { Strings } from 'tsbase/Functions/Strings';
-import { Asap, ParseJsx } from 'fyord';
-import { Character, GetPositionChangeFromDistanceAndAngle, PlayAudio, Position } from '../../../core/module';
+import { Asap, ParseJsx, Character, GetPositionChangeFromDistanceAndAngle, PlayAudio, Position } from 'fyord-game-engine';
 import { CharacterTypes, Images, Sounds } from '../../../enums/module';
 import styles from './missile.module.scss';
 

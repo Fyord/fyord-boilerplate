@@ -1,4 +1,4 @@
-import { Route, ParseJsx } from 'fyord';
+import { Route, ParseJsx } from 'fyord-game-engine';
 import { Asteroid } from '../../../characters/asteroids/asteroid/asteroid';
 import { Planet } from '../../../characters/asteroids/planet/planet';
 import { Player } from '../../../characters/asteroids/player/player';

@@ -1,4 +1,4 @@
-import { ParseJsx } from 'fyord';
+import { ParseJsx } from 'fyord-game-engine';
 
 export const controlsSection = <section>
   <h2>Controls</h2>

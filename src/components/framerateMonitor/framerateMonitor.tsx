@@ -1,5 +1,4 @@
-import { Component, ParseJsx, State } from 'fyord';
-import { Game } from '../../core/module';
+import { Component, Game, ParseJsx, State } from 'fyord-game-engine';
 import styles from './framerateMonitor.module.scss';
 
 export class FramerateMonitor extends Component {

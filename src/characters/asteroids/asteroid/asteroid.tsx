@@ -1,7 +1,9 @@
 import { Strings } from 'tsbase/Functions/Strings';
 import { Queryable } from 'tsbase/Collections/Queryable';
-import { Asap, ParseJsx, RawHtml } from 'fyord';
-import { Character, GetPositionChangeFromDistanceAndAngle, PlayAudio, Position, StartingSizeAndPosition } from '../../../core/module';
+import {
+  Asap, ParseJsx, RawHtml, Character, GetPositionChangeFromDistanceAndAngle,
+  PlayAudio, Position, StartingSizeAndPosition
+} from 'fyord-game-engine';
 import { Images, CharacterTypes, Sounds } from '../../../enums/module';
 import { asteroidSprites } from './sprites';
 import styles from './asteroid.module.scss';

@@ -1,5 +1,4 @@
-import { Route, ParseJsx } from 'fyord';
-import { Level } from '../../core/core/level/level';
+import { Route, ParseJsx, Level } from 'fyord-game-engine';
 import { Player } from '../../characters/asteroids/player/player';
 import { Routes } from '../../enums/Routes';
 import styles from './levelOne.module.scss';

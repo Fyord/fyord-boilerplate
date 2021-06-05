@@ -1,6 +1,5 @@
-import { Asap, ParseJsx, RawHtml } from 'fyord';
+import { Asap, Character, ParseJsx, RawHtml, StartingSizeAndPosition } from 'fyord-game-engine';
 import { CharacterTypes } from '../../../enums/module';
-import { Character, StartingSizeAndPosition } from '../../../core/module';
 import { planetSprite } from './sprite';
 import styles from './planet.module.scss';
 

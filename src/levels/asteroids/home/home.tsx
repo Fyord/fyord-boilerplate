@@ -1,4 +1,4 @@
-import { ParseJsx, Route, Fragment } from 'fyord';
+import { ParseJsx, Route, Fragment } from 'fyord-game-engine';
 import { Asteroid } from '../../../characters/asteroids/asteroid/asteroid';
 import { controlsSection } from '../../../components/controlsSection';
 import { Images } from '../../../enums/module';

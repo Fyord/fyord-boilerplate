@@ -1,8 +1,7 @@
+import { Character, Game, PlayAudio, Router } from 'fyord-game-engine';
 import { CharacterTypes, Images, Sounds } from '../../../enums/module';
-import { Character, Game, PlayAudio } from '../../../core/module';
 import { Wormhole } from '../wormhole/wormhole';
 import { Player } from './player';
-import { Router } from 'fyord';
 
 const handleDestructionCollision = (player: Player): void => {
   Game.Instance.Animation(() => {

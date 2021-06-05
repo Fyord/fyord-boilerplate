@@ -1,6 +1,5 @@
 import { Strings } from 'tsbase/Functions/Strings';
-import { Asap, ParseJsx } from 'fyord';
-import { Controller, Position, Character, GetPositionChangeFromDistanceAndAngle } from '../../../core/module';
+import { Asap, Character, Controller, GetPositionChangeFromDistanceAndAngle, ParseJsx, Position } from 'fyord-game-engine';
 import { Controls, CharacterTypes } from '../../../enums/module';
 import { CollisionFunction, PlayerCollisionMap } from './collisionMap';
 import { playerSprite } from './sprite';

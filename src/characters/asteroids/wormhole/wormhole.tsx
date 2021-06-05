@@ -1,6 +1,5 @@
-import { Asap, ParseJsx } from 'fyord';
+import { Asap, Character, ParseJsx } from 'fyord-game-engine';
 import { Images, CharacterTypes, Routes } from '../../../enums/module';
-import { Character } from '../../../core/module';
 import styles from './wormhole.module.scss';
 
 export class Wormhole extends Character {

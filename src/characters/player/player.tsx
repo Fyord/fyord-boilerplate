@@ -1,6 +1,5 @@
-import { ParseJsx, Asap } from 'fyord';
 import { Strings } from 'tsbase/Functions/Strings';
-import { Character, Controller } from '../../core/module';
+import { ParseJsx, Asap, Character, Controller } from 'fyord-game-engine';
 import { CharacterTypes, Controls } from '../../enums/module';
 import styles from './player.module.scss';
 

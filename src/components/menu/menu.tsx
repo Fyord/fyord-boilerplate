@@ -1,6 +1,5 @@
-import { Component, ParseJsx, State, Fragment } from 'fyord';
+import { Component, ParseJsx, State, Fragment, Game } from 'fyord-game-engine';
 import { Strings } from 'tsbase/Functions/Strings';
-import { Game } from '../../core/module';
 import { controlsSection } from '../controlsSection';
 import styles from './menu.module.scss';
 

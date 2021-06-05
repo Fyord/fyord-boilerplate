@@ -1,7 +1,7 @@
 import { Strings } from 'tsbase/Functions/Strings';
+import { Game, Level } from 'fyord-game-engine';
 import { Asteroid } from '../../characters/asteroids/asteroid/asteroid';
 import { Wormhole } from '../../characters/asteroids/wormhole/wormhole';
-import { Game, Level } from '../../core/module';
 import { Routes, Images } from '../../enums/module';
 
 export abstract class AsteroidsLevel extends Level {
