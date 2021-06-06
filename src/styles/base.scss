@@ -12,7 +12,6 @@ body {
   width: 100vw;
   margin: 0;
   padding: 0;
-  background-color: black;
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -25,22 +24,4 @@ main {
 a {
   color: lightgreen;
   text-decoration: none;
-}
-
-table {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-  background-color: white;
-  color: black;
-  min-width: 40vw;
-}
-
-td, th {
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 8px;
-}
-
-tr:nth-child(even) {
-  background-color: #dddddd;
 }

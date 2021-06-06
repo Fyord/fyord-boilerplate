@@ -1,5 +1,5 @@
-# fyord game boilerplate
-Boilerplate project using the fyord framework to build a game
+# fyord-game-engine boilerplate
+Boilerplate project using fyord-game-engine
 
 ***This branch is in a prototype state***
 
