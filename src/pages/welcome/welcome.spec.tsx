@@ -1,5 +1,6 @@
+import { Expect } from 'tsmockit';
+import { Asap } from 'fyord';
 import { WelcomePage } from './welcome';
-import { Asap, TestHelpers } from 'fyord';
 
 describe('WelcomePage', () => {
   let classUnderTest: WelcomePage;
@@ -23,9 +24,8 @@ describe('WelcomePage', () => {
       // fire any attached events
     });
 
-    const behaviorExpectationsMet = await TestHelpers.TimeLapsedCondition(() => {
-      return true; // assertions proving expected behavior was met
-    });
-    expect(behaviorExpectationsMet).toBeTruthy();
+    Expect(
+      () => true, // returns the result of this function once truthy to the following function for assertions
+      (m) => m.toBeTruthy());
   });
 });
