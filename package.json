@@ -26,7 +26,7 @@
     "css-loader": "^5.2.7",
     "eslint": "^6.8.0",
     "fyord": "^2.2.1",
-    "fyord-cli": "^1.3.4",
+    "fyord-cli": "^1.3.6",
     "html-webpack-plugin": "^4.5.2",
     "identity-obj-proxy": "^3.0.0",
     "jasmine-core": "^2.5.2",

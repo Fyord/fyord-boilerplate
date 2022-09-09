@@ -24,7 +24,7 @@ describe('WelcomePage', () => {
       // fire any attached events
     });
 
-    Expect(
+    await Expect(
       () => true, // returns the result of this function once truthy to the following function for assertions
       (m) => m.toBeTruthy());
   });
