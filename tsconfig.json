@@ -2,7 +2,11 @@
   "compilerOptions": {
     "target": "es2017",
     "module": "esnext",
-    "lib": ["es2015", "dom", "WebWorker"],
+    "lib": [
+      "es2015",
+      "dom",
+      "WebWorker"
+    ],
     "allowJs": true,
     "sourceMap": true,
     "outDir": "./public/",
@@ -21,11 +25,14 @@
     "experimentalDecorators": true,
     "baseUrl": ".",
     "paths": {
-      "*": ["node_modules/*"]
+      "*": [
+        "node_modules/*"
+      ]
     },
     "jsx": "react",
     "jsxFactory": "ParseJsx",
     "jsxFragmentFactory": "Fragment",
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "esModuleInterop": true
   }
 }
