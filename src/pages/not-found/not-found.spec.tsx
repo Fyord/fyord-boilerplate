@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import { TestHelpers, Route } from 'fyord';
 import { NotFoundPage } from './not-found';
 

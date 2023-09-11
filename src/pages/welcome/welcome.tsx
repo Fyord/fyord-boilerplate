@@ -20,7 +20,7 @@ export class WelcomePage extends Page {
       </header>
 
       <footer>
-        <a href="https://github.com/Fyord/fyord" target="_blank" title="Fork Fyord on GitHub!">
+        <a rel="noopener" href="https://github.com/Fyord/fyord" target="_blank" title="Fork Fyord on GitHub!">
           {githubIcon}
         </a>
       </footer>
