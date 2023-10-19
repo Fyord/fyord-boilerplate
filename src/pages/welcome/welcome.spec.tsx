@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import { Expect } from 'tsmockit';
 import { Asap } from 'fyord';
 import { WelcomePage } from './welcome';

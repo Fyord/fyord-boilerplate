@@ -14,5 +14,5 @@ export class NotFoundPage extends Page {
       <p>Could not find content matching, "{decodeURI(route?.path || '')}"</p>
       <p>Please check spelling. Otherwise the resource may have been moved.</p>
     </div>;
-  }
+  };
 }
