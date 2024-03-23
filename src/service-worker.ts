@@ -8,8 +8,8 @@ export enum ServiceWorkerEvents {
 
 export enum CachedFiles {
   Index = '/',
-  Bundle = '/bundle.js',
-  Styles = '/bundle.css',
+  Bundle = '/index.js',
+  Styles = '/index.css',
   Favicon = '/images/favicon.jpg',
   AppIcon = '/images/512.png'
 }
