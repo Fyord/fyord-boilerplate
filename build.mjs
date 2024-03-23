@@ -40,6 +40,7 @@ if (isProductionBuild) {
     entryPoints,
     bundle: true,
     outdir: 'public',
+    sourcemap: true,
     plugins: [{
       name: 'onBuild',
       setup(build) {
