@@ -58,6 +58,6 @@ if (isProductionBuild) {
     host: 'localhost'
   });
 
-  const localhostUrl = `http://${host}:${port}`;
+  const localhostUrl = `http://localhost:${port}`;
   console.log(`Serving at ${localhostUrl}`);
 }
