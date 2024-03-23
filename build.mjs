@@ -41,6 +41,7 @@ if (isProductionBuild) {
     bundle: true,
     outdir: 'public',
     sourcemap: true,
+    sourceRoot: 'src',
     plugins: [{
       name: 'onBuild',
       setup(build) {
