@@ -1,6 +1,7 @@
 import merge from 'webpack-merge';
 import { common } from './webpack.common';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
+import { Configuration } from 'webpack';
 
 module.exports = [
   merge(common, {
@@ -12,12 +13,14 @@ module.exports = [
     ],
     devtool: 'inline-source-map',
     devServer: {
-      contentBase: './public',
       compress: true,
       port: 4200,
       historyApiFallback: {
         disableDotRule: true
       }
+    },
+    performance: {
+      hints: false
     }
-  } as any)
+  } as Configuration)
 ];
