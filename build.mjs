@@ -7,10 +7,10 @@ const isProductionBuild = args[0] === 'production';
 
 const buildStaticFiles = () => {
   if (fs.existsSync('public')) {
-    fs.rmSync('public', { force: true, recursive: true }, (e) => console.error(e));
+    fs.rmSync('public', { force: true, recursive: true });
   }
 
-  fs.mkdirSync('public', {}, (e) => console.error(e));
+  fs.mkdirSync('public', {});
   fs.cpSync('src/wwwroot', 'public', { recursive: true });
   // fs.cpSync('src/index.html', 'public/index.html');
   const indexContents = fs.readFileSync('src/index.html').toString()
@@ -54,7 +54,7 @@ if (isProductionBuild) {
   });
 
   await context.watch();
-  const { host, port } = await context.serve({
+  const { port } = await context.serve({
     servedir: 'public',
     port: 4200,
     host: 'localhost'

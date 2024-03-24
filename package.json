@@ -39,8 +39,7 @@
     "typescript": "^5.4.3",
     "jest-environment-jsdom": "^29.6.4",
     "node-sass": "^9.0.0",
-    "esbuild": "^0.20.2",
-    "ts-node": "^10.9.2"
+    "esbuild": "^0.20.2"
   },
   "dependencies": {
     "file-loader": "^6.2.0"
