@@ -5,8 +5,7 @@ import { Configuration } from 'webpack';
 
 export const common: Configuration = {
   entry: {
-    bundle: './src/index.ts',
-    'service-worker': './src/service-worker.ts'
+    bundle: './src/index.ts'
   },
   mode: 'development',
   plugins: [

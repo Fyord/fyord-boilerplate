@@ -14,7 +14,7 @@ export class WelcomePage extends Page {
       <header>
         <div>
           {fyordIcon}
-          <h1>Welcome to Fyord</h1>
+          <h1>Welcome to Fyord!</h1>
           <p>For a quick overview, visit <a href="http://fyord.dev">fyord.dev</a></p>
         </div>
       </header>
