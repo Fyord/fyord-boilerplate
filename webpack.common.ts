@@ -1,26 +1,15 @@
 const path = require('path');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+import CopyWebpackPlugin from 'copy-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import { Configuration } from 'webpack';
 
-module.exports = {
+export const common: Configuration = {
   entry: {
     bundle: './src/index.ts',
     'service-worker': './src/service-worker.ts'
   },
   mode: 'development',
-  devServer: {
-    contentBase: './public',
-    compress: true,
-    port: 4200,
-    historyApiFallback: {
-      disableDotRule: true
-    }
-  },
   plugins: [
-    new HtmlWebpackPlugin({
-      template: 'src/index.html'
-    }),
     new CopyWebpackPlugin({
       patterns: [
         {
@@ -51,7 +40,7 @@ module.exports = {
       },
       {
         test: /\.module\.(sa|sc|c)ss$/,
-        loader: [
+        use: [
           MiniCssExtractPlugin.loader,
           {
             loader: 'css-loader',
@@ -78,7 +67,7 @@ module.exports = {
       {
         test: /\.(sa|sc|c)ss$/,
         exclude: /\.module.(sa|sc|c)ss$/,
-        loader: [
+        use: [
           MiniCssExtractPlugin.loader,
           'css-loader',
           {
