@@ -12,7 +12,7 @@ export enum CachedFiles {
   Bundle = '/index.js',
   Styles = '/index.css',
   Favicon = '/images/favicon.jpg',
-  AppIcon = '/images/512.png'
+  AppIcon = '/images/icons/512.png'
 }
 
 export type { };
@@ -61,7 +61,7 @@ const networkFirstQuery = (request: Request) => new AsyncQuery<Response>(async (
 
 const handleFetchCommand = async (event: FetchEvent): Promise<Response> => {
   const request = event.request;
-  const isCacheable = request.method === 'GET' && !request.url.includes('sockjs');
+  const isCacheable = request.method === 'GET' && !['sockjs', 'esbuild'].some(s => request.url.includes(s));
 
   const response = isCacheable ?
     (await networkFirstQuery(request).Execute()).Value :
