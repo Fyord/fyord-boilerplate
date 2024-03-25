@@ -8,7 +8,8 @@ export enum ServiceWorkerEvents {
 }
 
 export enum CachedFiles {
-  Index = '/',
+  Root = '/',
+  Index = '/index.html',
   Bundle = '/index.js',
   Styles = '/index.css',
   Favicon = '/images/favicon.jpg',
@@ -52,7 +53,7 @@ const networkFirstQuery = (request: Request) => new AsyncQuery<Response>(async (
   let response = await fetchAndCache(request);
 
   if (!response) {
-    const cachedResponse = await caches.match(request);
+    const cachedResponse = await caches.match(request) || await caches.match(request.url.split('?')[0]);
     response = cachedResponse || (await caches.match(CachedFiles.Index) as Response);
   }
 
