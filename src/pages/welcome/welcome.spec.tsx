@@ -17,6 +17,18 @@ describe('WelcomePage', () => {
     expect(await classUnderTest.Template()).toBeDefined();
   });
 
+  it('should return true for route when at root', async () => {
+    expect(await classUnderTest.Route({
+      path: '/'
+    } as any)).toEqual(true);
+  });
+
+  it('should return false for route when not at root', async () => {
+    expect(await classUnderTest.Route({
+      path: '/asdf'
+    } as any)).toEqual(false);
+  });
+
   it('should have appropriate behavior', async () => {
     document.body.innerHTML = await classUnderTest.Render();
 
