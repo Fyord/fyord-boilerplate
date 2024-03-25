@@ -1,3 +1,4 @@
+import { Logger, LogLevel } from 'tsbase/Utility/Logger/module';
 import { AsyncCommand, AsyncQuery } from 'tsbase/Patterns/CommandQuery/module';
 
 export enum ServiceWorkerEvents {
@@ -68,6 +69,13 @@ const handleFetchCommand = async (event: FetchEvent): Promise<Response> => {
 
   return response as Response;
 };
+
+Logger.Instance.EntryLogged.Subscribe(le => {
+  // eslint-disable-next-line no-console
+  le?.Level === LogLevel.Info && console.log(le.Message);
+  le?.Level === LogLevel.Warn && console.warn(le.Message);
+  le?.Level === LogLevel.Error && console.error(le.Message);
+});
 
 self.addEventListener(ServiceWorkerEvents.Install, async (event) => {
   event.waitUntil(cacheFilesCommand.Execute());
