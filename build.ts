@@ -24,8 +24,16 @@ const buildStaticFiles = () => {
   fs.writeFileSync('public/index.html', indexContents);
 };
 
-buildStaticFiles();
 const entryPoints = ['src/index.ts', 'src/service-worker.ts'];
+const plugins = [{
+  name: 'onBuild',
+  setup(build) {
+    build.onStart(() => {
+      buildStaticFiles();
+    });
+    build.onEnd(r => console.log(`Build completed: ${JSON.stringify(r)}`));
+  }
+}];
 
 if (isProductionBuild) {
   await esbuild.build({
@@ -33,7 +41,8 @@ if (isProductionBuild) {
     bundle: true,
     outdir: 'public',
     minify: true,
-    treeShaking: true
+    treeShaking: true,
+    plugins
   });
 } else {
   const context = await esbuild.context({
@@ -42,15 +51,7 @@ if (isProductionBuild) {
     outdir: 'public',
     sourcemap: true,
     sourceRoot: 'src',
-    plugins: [{
-      name: 'onBuild',
-      setup(build) {
-        build.onStart(() => {
-          buildStaticFiles();
-        });
-        build.onEnd(r => console.log(`Build completed: ${JSON.stringify(r)}`));
-      }
-    }]
+    plugins
   });
 
   await context.watch();
@@ -63,4 +64,3 @@ if (isProductionBuild) {
   const localhostUrl = `http://localhost:${port}`;
   console.log(`Serving at ${localhostUrl}`);
 }
-export default {};
