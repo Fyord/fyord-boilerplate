@@ -22,7 +22,12 @@
   "testEnvironment": "jsdom",
   "coveragePathIgnorePatterns": [
     "/node_modules/",
-    "enzyme.js"
+    "src/app.ts",
+    "src/environments.ts",
+    "src/index.ts",
+    "src/layouts.ts",
+    "src/service-worker.ts",
+    "module.ts"
   ],
   "coverageReporters": [
     "json",
