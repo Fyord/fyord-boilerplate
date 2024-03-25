@@ -22,7 +22,7 @@ const version = 'v0.0.1';
 
 const cacheFilesCommand = new AsyncCommand(async () => {
   const cache = await caches.open(version + cacheName);
-  return cache.addAll(Array.from(Object.values(CachedFiles)));
+  return await cache.addAll(Array.from(Object.values(CachedFiles)));
 });
 
 const deleteOldCacheCommand = new AsyncCommand(async () => {
@@ -34,19 +34,23 @@ const deleteOldCacheCommand = new AsyncCommand(async () => {
       .map((key) => { return caches.delete(key); }));
 });
 
-async function fetchAndCache(request: Request): Promise<Response> {
-  const response = await fetch(request);
+async function fetchAndCache(request: Request): Promise<Response | null> {
+  try {
+    const response = await fetch(request);
 
-  const copy = response.clone();
-  await (await caches.open(version + cacheName)).put(request, copy);
+    const copy = response.clone();
+    await (await caches.open(version + cacheName)).put(request, copy);
 
-  return response;
+    return response;
+  } catch (error) {
+    return null;
+  }
 }
 
 const networkFirstQuery = (request: Request) => new AsyncQuery<Response>(async () => {
   let response = await fetchAndCache(request);
 
-  if (response.status >= 400) {
+  if (!response) {
     const cachedResponse = await caches.match(request);
     response = cachedResponse || (await caches.match(CachedFiles.Index) as Response);
   }
