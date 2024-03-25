@@ -63,3 +63,4 @@ if (isProductionBuild) {
   const localhostUrl = `http://localhost:${port}`;
   console.log(`Serving at ${localhostUrl}`);
 }
+export default {};
