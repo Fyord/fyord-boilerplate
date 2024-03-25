@@ -27,12 +27,12 @@ const cacheFilesCommand = new AsyncCommand(async () => {
 });
 
 const deleteOldCacheCommand = new AsyncCommand(async () => {
-  const keys = await caches.keys();
+  const keys = (await caches.keys())
+    .filter(key => !key.includes(version));
 
-  await Promise.all(
-    keys
-      .filter((key) => { return key.indexOf(version) !== 0; })
-      .map((key) => { return caches.delete(key); }));
+  for (const key of keys) {
+    await caches.delete(key);
+  }
 });
 
 async function fetchAndCache(request: Request): Promise<Response | null> {
