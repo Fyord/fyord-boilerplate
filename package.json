@@ -7,8 +7,8 @@
   "author": "Fyord",
   "license": "MIT",
   "scripts": {
-    "build": "esrun --tsconfig=./build.tsconfig.json ./build.ts production",
-    "start": "esrun --tsconfig=./build.tsconfig.json ./build.ts",
+    "build": "esrun --tsconfig=./esbuild/build.tsconfig.json ./esbuild/build.ts production",
+    "start": "esrun --tsconfig=./esbuild/build.tsconfig.json ./esbuild/build.ts",
     "test": "jest --watch",
     "test-once": "jest --passWithNoTests --collectCoverage --coverageReporters lcov clover",
     "lint": "eslint ./src --ext .ts,.tsx",
