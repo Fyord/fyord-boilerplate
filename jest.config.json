@@ -12,8 +12,7 @@
       "ts-jest",
       {
         "tsconfig": "tsconfig.json",
-        "diagnostics": false,
-        "isolatedModules": true
+        "diagnostics": false
       }
     ]
   },
@@ -30,5 +29,8 @@
     "lcov",
     "text",
     "text-summary"
+  ],
+  "collectCoverageFrom": [
+    "src/**/*.(ts|tsx)"
   ]
 }
