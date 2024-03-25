@@ -12,7 +12,8 @@
       "ts-jest",
       {
         "tsconfig": "tsconfig.json",
-        "diagnostics": false
+        "diagnostics": false,
+        "isolatedModules": true
       }
     ]
   },
