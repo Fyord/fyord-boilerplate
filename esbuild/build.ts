@@ -1,35 +1,19 @@
 /* eslint-disable no-console */
 import * as esbuild from 'esbuild';
-import * as fs from 'fs';
+import { BuildConstants } from './buildConstants';
+import { onBuildStartOperations } from './onStartOperations';
 
 const args = process.argv.slice(2);
 const isProductionBuild = args[0] === 'production';
-
-const buildStaticFiles = () => {
-  if (fs.existsSync('public')) {
-    fs.rmSync('public', { force: true, recursive: true });
-  }
-
-  fs.mkdirSync('public', {});
-  fs.cpSync('src/wwwroot', 'public', { recursive: true });
-  // fs.cpSync('src/index.html', 'public/index.html');
-  const indexContents = fs.readFileSync('src/index.html').toString()
-    .replace('</head>', `  <link rel="stylesheet" href="index.css?${Date.now()}">
-  </head>`)
-    .replace('</body>', `  <script src="index.js?${Date.now()}"></script>
-  </body>`)
-    // eslint-disable-next-line max-len
-    .replace('</body>', isProductionBuild ? '</body>' : `  <script>new EventSource('/esbuild').addEventListener('change', () => location.reload())</script>
-  </body>`);
-  fs.writeFileSync('public/index.html', indexContents);
-};
-
 const entryPoints = ['src/index.ts', 'src/service-worker.ts'];
+
 const plugins = [{
   name: 'onBuild',
   setup(build) {
     build.onStart(() => {
-      buildStaticFiles();
+      onBuildStartOperations.forEach(operation => {
+        operation(isProductionBuild);
+      });
     });
     build.onEnd(r => console.log(`Build completed: ${JSON.stringify(r)}`));
   }
@@ -39,7 +23,7 @@ if (isProductionBuild) {
   await esbuild.build({
     entryPoints,
     bundle: true,
-    outdir: 'public',
+    outdir: BuildConstants.BuildDir,
     minify: true,
     treeShaking: true,
     plugins
@@ -48,7 +32,7 @@ if (isProductionBuild) {
   const context = await esbuild.context({
     entryPoints,
     bundle: true,
-    outdir: 'public',
+    outdir: BuildConstants.BuildDir,
     sourcemap: true,
     sourceRoot: 'src',
     plugins
@@ -56,7 +40,7 @@ if (isProductionBuild) {
 
   await context.watch();
   const { port } = await context.serve({
-    servedir: 'public',
+    servedir: BuildConstants.BuildDir,
     port: 4200,
     host: 'localhost'
   });
