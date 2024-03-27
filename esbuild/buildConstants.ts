@@ -5,5 +5,6 @@ export enum BuildConstants {
   PublicIndexHtml = 'public/index.html',
   ClosingHeadTag = '</head>',
   ClosingBodyTag = '</body>',
-  HotReloadScript = "<script>new EventSource('/esbuild').addEventListener('change', () => location.reload())</script>"
+  HotReloadScript = "<script>new EventSource('/esbuild').addEventListener('change', () => location.reload())</script>",
+  BuildTimeLog = 'Build completed in'
 }

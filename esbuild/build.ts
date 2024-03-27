@@ -2,12 +2,17 @@
 import * as esbuild from 'esbuild';
 import { BuildConstants } from './buildConstants';
 import { onBuildStartOperations } from './onStartOperations';
+import { beforeOperations } from './beforeOperations';
 
 const args = process.argv.slice(2);
 const isProductionBuild = args[0] === 'production';
 const entryPoints = ['src/index.ts', 'src/service-worker.ts'];
 
-const plugins = [{
+beforeOperations.forEach(operation => {
+  operation(isProductionBuild);
+});
+
+const plugins: esbuild.BuildOptions['plugins'] = [{
   name: 'onBuild',
   setup(build) {
     build.onStart(() => {
@@ -15,7 +20,11 @@ const plugins = [{
         operation(isProductionBuild);
       });
     });
-    build.onEnd(r => console.log(`Build completed: ${JSON.stringify(r)}`));
+    build.onEnd(r => {
+      r.errors.length && console.error('errors', r.errors);
+      r.warnings.length && console.warn('warnings', r.warnings);
+    });
+    build.onDispose(() => console.timeEnd(BuildConstants.BuildTimeLog));
   }
 }];
 

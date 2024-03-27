@@ -27,7 +27,8 @@
     "src/index.ts",
     "src/layouts.ts",
     "src/service-worker.ts",
-    "module.ts"
+    "module.ts",
+    "/esbuild/"
   ],
   "coverageReporters": [
     "json",

@@ -1,10 +1,9 @@
-import { Strings } from 'tsbase/System/Strings';
 import * as fs from 'fs';
+import { Strings } from 'tsbase/System/Strings';
 import { BuildConstants } from './buildConstants';
+import { BuildOperation } from './buildOperation';
 
-type OnStartOperation = (isProductionBuild: boolean) => void;
-
-const buildStaticFiles: OnStartOperation = (isProductionBuild: boolean) => {
+const buildStaticFiles: BuildOperation = (isProductionBuild: boolean) => {
   if (fs.existsSync(BuildConstants.BuildDir)) {
     fs.rmSync(BuildConstants.BuildDir, { force: true, recursive: true });
   }
@@ -19,6 +18,6 @@ const buildStaticFiles: OnStartOperation = (isProductionBuild: boolean) => {
   fs.writeFileSync(BuildConstants.PublicIndexHtml, Strings.MinifyXml(indexContents));
 };
 
-export const onBuildStartOperations = [
+export const onBuildStartOperations: BuildOperation[] = [
   buildStaticFiles
 ];
