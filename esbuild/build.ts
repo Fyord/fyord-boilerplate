@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import * as esbuild from 'esbuild';
+import * as fs from 'fs';
 import { BuildConstants } from './buildConstants';
 import { onBuildStartOperations } from './onStartOperations';
 import { beforeOperations } from './beforeOperations';
@@ -7,6 +8,15 @@ import { beforeOperations } from './beforeOperations';
 const args = process.argv.slice(2);
 const isProductionBuild = args[0] === 'production';
 const entryPoints = ['src/index.ts', 'src/service-worker.ts'];
+
+const cleanOutputDirectory = () => {
+  if (fs.existsSync(BuildConstants.BuildDir)) {
+    fs.rmSync(BuildConstants.BuildDir, { force: true, recursive: true });
+  }
+  fs.mkdirSync(BuildConstants.BuildDir, {});
+};
+
+cleanOutputDirectory();
 
 beforeOperations.forEach(operation => {
   operation(isProductionBuild);
