@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import * as esbuild from 'esbuild';
 import * as fs from 'fs';
+import * as path from 'path';
 import { BuildConstants } from './buildConstants';
 import { onBuildStartOperations } from './onStartOperations';
 import { beforeOperations } from './beforeOperations';
@@ -22,21 +23,42 @@ beforeOperations.forEach(operation => {
   operation(isProductionBuild);
 });
 
-const plugins: esbuild.BuildOptions['plugins'] = [{
-  name: 'onBuild',
-  setup(build) {
-    build.onStart(() => {
-      onBuildStartOperations.forEach(operation => {
-        operation(isProductionBuild);
+const plugins: esbuild.BuildOptions['plugins'] = [
+  {
+    name: 'wasm',
+    setup(build) {
+      build.onResolve({ filter: /\.wasm$/ }, args => {
+        if (args.resolveDir === '') {
+          return;
+        }
+        return {
+          path: path.isAbsolute(args.path) ? args.path : path.join(args.resolveDir, args.path),
+          namespace: 'wasm-binary'
+        };
       });
-    });
-    build.onEnd(r => {
-      r.errors.length && console.error('errors', r.errors);
-      r.warnings.length && console.warn('warnings', r.warnings);
-    });
-    build.onDispose(() => console.timeEnd(BuildConstants.BuildTimeLog));
+
+      build.onLoad({ filter: /.*/, namespace: 'wasm-binary' }, async (args) => ({
+        contents: await fs.promises.readFile(args.path),
+        loader: 'binary'
+      }));
+    }
+  },
+  {
+    name: 'onBuild',
+    setup(build) {
+      build.onStart(() => {
+        onBuildStartOperations.forEach(operation => {
+          operation(isProductionBuild);
+        });
+      });
+      build.onEnd(r => {
+        r.errors.length && console.error('errors', r.errors);
+        r.warnings.length && console.warn('warnings', r.warnings);
+      });
+      build.onDispose(() => console.timeEnd(BuildConstants.BuildTimeLog));
+    }
   }
-}];
+];
 
 if (isProductionBuild) {
   await esbuild.build({
