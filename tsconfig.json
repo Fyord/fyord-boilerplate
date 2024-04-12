@@ -33,6 +33,9 @@
     "jsxFactory": "ParseJsx",
     "jsxFragmentFactory": "Fragment",
     "forceConsistentCasingInFileNames": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "noEmit": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true
   }
 }

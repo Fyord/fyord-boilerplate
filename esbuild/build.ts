@@ -9,7 +9,9 @@ import { onBuildEndOperations } from './onEndOperations';
 
 const args = process.argv.slice(2);
 const isProductionBuild = args[0] === 'production';
-const entryPoints = ['src/index.ts', 'src/service-worker.ts'];
+const browserEntryPoints = ['src/index.ts', 'src/service-worker.ts'];
+const nodeEntryPoints = [];
+const outdir = BuildConstants.BuildDir;
 
 const cleanOutputDirectory = () => {
   if (fs.existsSync(BuildConstants.BuildDir)) {
@@ -63,29 +65,49 @@ const plugins: esbuild.BuildOptions['plugins'] = [
 ];
 
 if (isProductionBuild) {
+  if (nodeEntryPoints.length) {
+    await esbuild.build({
+      entryPoints: nodeEntryPoints,
+      bundle: false,
+      outdir,
+      minify: true,
+      treeShaking: true
+    });
+  }
   await esbuild.build({
-    entryPoints,
+    entryPoints: browserEntryPoints,
     bundle: true,
-    outdir: BuildConstants.BuildDir,
+    outdir,
     minify: true,
     treeShaking: true,
     plugins
   });
 } else {
-  const context = await esbuild.context({
-    entryPoints,
+  if (nodeEntryPoints.length) {
+    const nodeContext = await esbuild.context({
+      entryPoints: nodeEntryPoints,
+      bundle: false,
+      outdir,
+      sourcemap: true,
+      sourceRoot: 'src'
+    });
+
+    await nodeContext.watch();
+  }
+
+  const browserContext = await esbuild.context({
+    entryPoints: browserEntryPoints,
     bundle: true,
-    outdir: BuildConstants.BuildDir,
+    outdir,
     sourcemap: true,
     sourceRoot: 'src',
     plugins
   });
 
-  await context.watch();
+  await browserContext.watch();
 
-  // @ts-ignore - may be changed in cli
-  if (platform === 'browser') {
-    const { port } = await context.serve({
+  if (!nodeEntryPoints.length) {
+    const { port } = await browserContext.serve({
       servedir: BuildConstants.BuildDir,
       port: 4200,
       host: 'localhost'
