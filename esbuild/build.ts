@@ -10,8 +10,6 @@ import { onBuildEndOperations } from './onEndOperations';
 const args = process.argv.slice(2);
 const isProductionBuild = args[0] === 'production';
 const entryPoints = ['src/index.ts', 'src/service-worker.ts'];
-const platform: esbuild.Platform = 'node';
-const bundle = true;
 
 const cleanOutputDirectory = () => {
   if (fs.existsSync(BuildConstants.BuildDir)) {
@@ -67,8 +65,7 @@ const plugins: esbuild.BuildOptions['plugins'] = [
 if (isProductionBuild) {
   await esbuild.build({
     entryPoints,
-    platform,
-    bundle,
+    bundle: true,
     outdir: BuildConstants.BuildDir,
     minify: true,
     treeShaking: true,
@@ -77,8 +74,7 @@ if (isProductionBuild) {
 } else {
   const context = await esbuild.context({
     entryPoints,
-    platform,
-    bundle,
+    bundle: true,
     outdir: BuildConstants.BuildDir,
     sourcemap: true,
     sourceRoot: 'src',
