@@ -10,7 +10,7 @@ import { onEndOperations } from './onEndOperations';
 const args = process.argv.slice(2);
 const isProductionBuild = args[0] === 'production';
 const entryPoints = ['src/index.ts', 'src/service-worker.ts'];
-const platform = 'browser';
+const platform: esbuild.Platform = 'node';
 
 const cleanOutputDirectory = () => {
   if (fs.existsSync(BuildConstants.BuildDir)) {
@@ -86,6 +86,7 @@ if (isProductionBuild) {
 
   await context.watch();
 
+  // @ts-ignore - may be changed in cli
   if (platform === 'browser') {
     const { port } = await context.serve({
       servedir: BuildConstants.BuildDir,
