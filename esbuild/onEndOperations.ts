@@ -6,6 +6,6 @@ const logErrors: BuildOperation = (_isProductionBuild: boolean, r: BuildResult<B
   r.warnings.length && console.warn('warnings', r.warnings);
 };
 
-export const onEndOperations: BuildOperation[] = [
+export const onBuildEndOperations: BuildOperation[] = [
   logErrors
 ];

@@ -5,7 +5,7 @@ import * as path from 'path';
 import { BuildConstants } from './buildConstants';
 import { onBuildStartOperations } from './onStartOperations';
 import { beforeOperations } from './beforeOperations';
-import { onEndOperations } from './onEndOperations';
+import { onBuildEndOperations } from './onEndOperations';
 
 const args = process.argv.slice(2);
 const isProductionBuild = args[0] === 'production';
@@ -54,7 +54,7 @@ const plugins: esbuild.BuildOptions['plugins'] = [
         });
       });
       build.onEnd(r => {
-        onEndOperations.forEach(operation => {
+        onBuildEndOperations.forEach(operation => {
           operation(isProductionBuild, r);
         });
       });
