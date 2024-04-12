@@ -1,1 +1,1 @@
-export type BuildOperation = (isProductionBuild: boolean) => void;
+export type BuildOperation = (isProductionBuild: boolean, options?: any) => void;
