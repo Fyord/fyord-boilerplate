@@ -85,12 +85,15 @@ if (isProductionBuild) {
   });
 
   await context.watch();
-  const { port } = await context.serve({
-    servedir: BuildConstants.BuildDir,
-    port: 4200,
-    host: 'localhost'
-  });
 
-  const localhostUrl = `http://localhost:${port}`;
-  console.log(`Serving at ${localhostUrl}`);
+  if (platform === 'browser') {
+    const { port } = await context.serve({
+      servedir: BuildConstants.BuildDir,
+      port: 4200,
+      host: 'localhost'
+    });
+
+    const localhostUrl = `http://localhost:${port}`;
+    console.log(`Serving at ${localhostUrl}`);
+  }
 }
