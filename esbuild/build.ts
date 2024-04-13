@@ -2,10 +2,8 @@
 import * as esbuild from 'esbuild';
 import * as fs from 'fs';
 import * as path from 'path';
+import { beforeOperations, onBuildStartOperations, onBuildEndOperations, afterOperations } from './buildOperations';
 import { BuildConstants } from './buildConstants';
-import { onBuildStartOperations } from './onStartOperations';
-import { beforeOperations } from './beforeOperations';
-import { onBuildEndOperations } from './onEndOperations';
 
 const args = process.argv.slice(2);
 const isProductionBuild = args[0] === 'production';
@@ -22,9 +20,7 @@ const cleanOutputDirectory = () => {
 
 cleanOutputDirectory();
 
-beforeOperations.forEach(operation => {
-  operation(isProductionBuild);
-});
+beforeOperations.forEach(operation => operation(isProductionBuild));
 
 const plugins: esbuild.BuildOptions['plugins'] = [
   {
@@ -50,16 +46,13 @@ const plugins: esbuild.BuildOptions['plugins'] = [
     name: 'onBuild',
     setup(build) {
       build.onStart(() => {
-        onBuildStartOperations.forEach(operation => {
-          operation(isProductionBuild);
-        });
+        console.time(BuildConstants.BuildTimeLog);
+        onBuildStartOperations.forEach(operation => operation(isProductionBuild));
       });
       build.onEnd(r => {
-        onBuildEndOperations.forEach(operation => {
-          operation(isProductionBuild, r);
-        });
+        console.timeEnd(BuildConstants.BuildTimeLog);
+        onBuildEndOperations.forEach(operation => operation(isProductionBuild, r));
       });
-      build.onDispose(() => console.timeEnd(BuildConstants.BuildTimeLog));
     }
   }
 ];
@@ -70,8 +63,7 @@ if (isProductionBuild) {
       entryPoints: nodeEntryPoints,
       bundle: false,
       outdir,
-      minify: true,
-      treeShaking: true
+      minify: true
     });
   }
   await esbuild.build({
@@ -79,7 +71,6 @@ if (isProductionBuild) {
     bundle: true,
     outdir,
     minify: true,
-    treeShaking: true,
     plugins
   });
 } else {
@@ -117,3 +108,5 @@ if (isProductionBuild) {
     console.log(`Serving at ${localhostUrl}`);
   }
 }
+
+afterOperations.forEach(operation => operation(isProductionBuild));

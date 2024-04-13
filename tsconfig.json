@@ -37,5 +37,6 @@
     "noEmit": true,
     "resolveJsonModule": true,
     "skipLibCheck": true
-  }
+  },
+  "exclude": ["esbuild"]
 }

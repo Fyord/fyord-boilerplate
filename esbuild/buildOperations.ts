@@ -1,7 +1,13 @@
+/* eslint-disable no-console */
 import * as fs from 'fs';
+import { BuildOptions, BuildResult } from 'esbuild';
 import { Strings } from 'tsbase/System/Strings';
 import { BuildConstants } from './buildConstants';
-import { BuildOperation } from './buildOperation';
+
+export type BuildOperation = (isProductionBuild: boolean, options?: any) => void;
+
+export const beforeOperations: BuildOperation[] = [
+];
 
 const buildStaticFiles: BuildOperation = (isProductionBuild: boolean) => {
   fs.cpSync(BuildConstants.AssetsDir, BuildConstants.BuildDir, { recursive: true });
@@ -15,4 +21,16 @@ const buildStaticFiles: BuildOperation = (isProductionBuild: boolean) => {
 
 export const onBuildStartOperations: BuildOperation[] = [
   buildStaticFiles
+];
+
+const logErrors: BuildOperation = (_isProductionBuild: boolean, r: BuildResult<BuildOptions>) => {
+  r.errors.length && console.error('errors', r.errors);
+  r.warnings.length && console.warn('warnings', r.warnings);
+};
+
+export const onBuildEndOperations: BuildOperation[] = [
+  logErrors
+];
+
+export const afterOperations: BuildOperation[] = [
 ];
