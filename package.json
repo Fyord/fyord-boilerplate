@@ -23,7 +23,7 @@
     "core-js": "^3.32.2",
     "eslint": "^8.57.0",
     "fyord": "^3.0.1",
-    "fyord-cli": "^1.5.5",
+    "fyord-cli": "^3.0.0",
     "identity-obj-proxy": "^3.0.0",
     "jasmine-core": "^5.1.1",
     "jest": "^29.6.4",
