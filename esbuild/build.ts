@@ -109,7 +109,8 @@ if (isProductionBuild) {
     const { port } = await browserContext.serve({
       servedir: BuildConstants.BuildDir,
       port: 4200,
-      host: 'localhost'
+      host: 'localhost',
+      fallback: 'public/index.html'
     });
 
     const localhostUrl = `http://localhost:${port}`;
