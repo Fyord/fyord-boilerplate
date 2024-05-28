@@ -21,19 +21,22 @@
     "@typescript-eslint/parser": "^7.3.1",
     "babel-jest": "^29.6.4",
     "core-js": "^3.32.2",
+    "esbuild": "^0.20.2",
+    "esbuild-sass-plugin": "^3.3.0",
     "eslint": "^8.57.0",
+    "esrun": "^3.2.26",
     "fyord": "^3.0.1",
     "fyord-cli": "^3.0.0",
     "identity-obj-proxy": "^3.0.0",
     "jasmine-core": "^5.1.1",
     "jest": "^29.6.4",
+    "jest-environment-jsdom": "^29.6.4",
+    "postcss": "^8.4.38",
+    "postcss-modules": "^6.0.0",
     "ts-jest": "^29.1.1",
     "tsbase": "^6.0.3",
     "tslib": "^2.6.2",
     "tsmockit": "^2.0.8",
-    "typescript": "^5.4.3",
-    "jest-environment-jsdom": "^29.6.4",
-    "esbuild": "^0.20.2",
-    "esrun": "^3.2.26"
+    "typescript": "^5.4.3"
   }
 }

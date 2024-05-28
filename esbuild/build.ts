@@ -4,6 +4,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { beforeOperations, onBuildStartOperations, onBuildEndOperations, afterOperations } from './buildOperations';
 import { BuildConstants } from './buildConstants';
+import { sassPlugin, postcssModules } from 'esbuild-sass-plugin';
 
 const args = process.argv.slice(2);
 const isProductionBuild = args[0] === 'production';
@@ -23,6 +24,13 @@ cleanOutputDirectory();
 beforeOperations.forEach(operation => operation(isProductionBuild));
 
 const plugins: esbuild.BuildOptions['plugins'] = [
+  sassPlugin({
+    filter: /\.module\.scss$/,
+    transform: postcssModules({})
+  }),
+  sassPlugin({
+    filter: /\.scss$/
+  }),
   {
     name: 'wasm',
     setup(build) {
