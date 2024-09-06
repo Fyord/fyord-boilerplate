@@ -26,7 +26,10 @@ beforeOperations.forEach(operation => operation(isProductionBuild));
 const plugins: esbuild.BuildOptions['plugins'] = [
   sassPlugin({
     filter: /\.module\.scss$/,
-    transform: postcssModules({})
+    transform: postcssModules({
+      generateScopedName: '[name]__[local]',
+      hashPrefix: 'prefix'
+    })
   }),
   sassPlugin({
     filter: /\.scss$/
